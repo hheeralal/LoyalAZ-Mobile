@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+    <LinearLayout android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:layout_width="match_parent">
+
+        <ImageView
+            android:id="@+id/ivPrgType"
+            android:layout_width="54sp"
+            android:layout_height="33sp"
+            android:src="@drawable/heart" />
+
+        <ImageView android:src="@drawable/ic_launcher" android:layout_height="64px" android:id="@+id/imageViewFPLogo" android:layout_width="64px"></ImageView>
+        <LinearLayout android:id="@+id/linearLayout2" android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_FPName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15px"
+                android:text="TextView"
+                android:textSize="16sp" />
+
+            <TextView android:text="tv"    android:paddingLeft="15px" android:textSize="16sp" android:id="@+id/textView_FPDescription" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+            <TextView android:text="tvaddress"    android:paddingLeft="15px" android:textSize="16sp" android:id="@+id/textView_FPAddress" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+            <TextView
+                android:id="@+id/textView_FPDistance"  android:paddingLeft="15px"   android:textSize="16sp" 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,411 @@
+package com.outstandingresults.Managers;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathFactory;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.ParseException;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.RequestWrapper;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+import org.ksoap2.HeaderProperty;
+import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapSerializationEnvelope;
+import org.ksoap2.transport.HttpTransportSE;
+import org.kxml2.io.KXmlSerializer;
+import org.kxml2.kdom.Document;
+import org.kxml2.kdom.Element;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+import org.xmlpull.v1.XmlSerializer;
+
+import com.outstandingresults.Helpers.ApplicationLoyalAZ;
+import com.outstandingresults.Helpers.Helper;
+
+import android.content.ServiceConnection;
+import android.util.Base64;
+import android.util.Log;
+
+
+public class CommunicationManager  {
+	
+	//private static String URL = "http://loyalaz.com/test/p/server.php";
+	
+	private static String URL = "";
+	
+	
+	public String SendSOAPRequest(String pMethodName,LinkedHashMap<String, String>params,Boolean decodedString)
+	{
+		String result = SendSOAPRequest(pMethodName,params);
+		String st="";
+        byte[] bytes = null;
+        if(result!=null)
+        {
+            bytes = Base64.decode(result, Base64.DEFAULT);
+    		try {
+    			st = new String(bytes,"UTF-8");
+    		} catch (UnsupportedEncodingException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+        }
+        return st;
+	}
+		
+	private void setBaseURL()
+	{
+        LinkedHashMap<String, String>params = new LinkedHashMap<String, String>();
+        
+        
+    	URL = ApplicationLoyalAZ.WebServiceURL;
+    	System.out.println("BASE_URL_HIT==="+URL);
+    	String SOAP_ACTION = "get_baseurl";
+        
+        params.put("d", "1");		// 0 = PRODUCTION;;	1= TESTING; 2= DEMO
+        
+        
+        String responseXML = this.callWebService(SOAP_ACTION, params);
+        String appURL = Helper.GetElementValue(responseXML, "return");
+        byte[] bytes = Base64.decode(appURL, Base64.DEFAULT);
+        try {
+			appURL = new String(bytes,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        ApplicationLoyalAZ.WebServiceURL = appURL;
+        ApplicationLoyalAZ.baseURLSet=true;
+        
+/*
+        
+        String NAMESPACE = "http://schemas.xmlsoap.org/soap/envelope/";
+        
+        String METHOD_NAME = "get_baseurl";
+
+        String result = null;
+        Object resultRequestSOAP = null;
+
+        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+        
+        
+        Iterator it = params.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pairs = (Map.Entry)it.next();
+            request.addProperty(pairs.getKey().toString(), pairs.getValue());
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                        SoapEnvelope.VER11);
+
+        envelope.dotNet = false;
+        envelope.setOutputSoapObject(request);
+        
+        
+        MyHttpTransportSE me = new MyHttpTransportSE();
+        int len = me.getContentLength(envelope);        
+        
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+//        ArrayList<HeaderProperty> headerPropertyArrayList = new ArrayList<HeaderProperty>();
+//        headerPropertyArrayList.add(new HeaderProperty("Content-Length", Integer.toString(len) ));
+        
+//        try {
+//        	androidHttpTransport.getServiceConnection().setRequestProperty("Content-Length", ""+len);
+////			androidHttpTransport.getServiceConnection().setRequestProperty("Connection", "close");
+////			androidHttpTransport.getServiceConnection().setRequestProperty("Content-Type", "application/soap+xml");
+////			androidHttpTransport.getServiceConnection().setRequestProperty("User-Agent", "kSOAP/2.0");
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+        androidHttpTransport.debug = true;
+        String st="";
+        try {
+        	System.out.println(request);
+        	
+            androidHttpTransport.call(SOAP_ACTION, envelope);
+            resultRequestSOAP = envelope.getResponse(); // Output received
+            result = resultRequestSOAP.toString(); // Result string
+            byte[] bytes = Base64.decode(result, Base64.DEFAULT);
+            
+    		try {
+    			st = new String(bytes,"UTF-8");
+    		} catch (UnsupportedEncodingException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    		Log.d("BASE URL SET",st);
+    		ApplicationLoyalAZ.baseURLSet=true;
+    		ApplicationLoyalAZ.WebServiceURL = st;
+        } catch (Exception e) {
+        	Log.e("SendSOAPRequest_EXCEPTION", e.getMessage());
+            e.printStackTrace(); 
+            
+        }
+        */
+        
+        
+	}
+		
+	
+	public String callWebService(String soapaction,LinkedHashMap<String, String> params) {
+//	    String body ="<?xml version=\"1.0\" encoding=\"UTF-8\"?><SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"http://example.com/v1.0/Records\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><SOAP-ENV:Body>"+soapenvbody+"</SOAP-ENV:Body></SOAP-ENV:Envelope>";
+
+	    String soapenvbody = "";
+	    String responseXML = "";
+	    
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\">\n");
+	    sb.append("<SOAP-ENV:Body>\n");
+	    sb.append("<"+soapaction+">\n");
+        Iterator it = params.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pairs = (Map.Entry)it.next();
+            sb.append("<"+pairs.getKey().toString()+">");
+            sb.append(pairs.getValue());
+            sb.append("</"+pairs.getKey().toString()+">");
+            //request.addProperty(pairs.getKey().toString(), pairs.getValue());
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+	    //sb.append("<d>0</d>\n");
+	    sb.append("</"+soapaction+">\n");
+	    sb.append("</SOAP-ENV:Body></SOAP-ENV:Envelope>");
+	    soapenvbody = sb.toString();
+//	    soapenvbody = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\"><SOAP-ENV:Body><get_baseurl><d>0</d></get_baseurl></SOAP-ENV:Body></SOAP-ENV:Envelope>";
+	    Log.d("SOAP", soapenvbody);
+//	            HttpPost httppost = new HttpPost("http://www.loyalaz.com/setup/"); //
+	            HttpPost httppost = new HttpPost(ApplicationLoyalAZ.WebServiceURL);
+
+	            // Request parameters and other properties.
+	            StringEntity stringentity = null;
+				try {
+					stringentity = new StringEntity(soapenvbody,"ISO-8859-1");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	            stringentity.setChunked(true);
+	            httppost.setEntity(stringentity);
+	            httppost.addHeader("Content-Type" , "text/xml; charset=ISO-8859-1");
+//	            httppost.addHeader("Content-Length" , Integer.toString(sb.toString().length()));
+	            httppost.addHeader("SOAPAction",soapaction);
+	            HttpClient httpclient = new DefaultHttpClient();
+	            
+
+	            //Execute and get the response.
+	            
+	            HttpResponse response = null;
+				try {
+					response = httpclient.execute(httppost);
+				} catch (ClientProtocolException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();	
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	            HttpEntity entity = response.getEntity();
+
+	            String strresponse = null;
+	            if(entity!=null) {
+	                try {
+						strresponse = EntityUtils.toString(entity);
+						responseXML = strresponse;
+						Log.d("RESPONSE", strresponse);
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	            }
+	            return responseXML;
+	     }
+	
+
+	
+/*	
+	private void setBaseURL()
+	{
+        LinkedHashMap<String, String>params = new LinkedHashMap<String, String>();
+        params.put("d", "0");		// 0 = PRODUCTION;;	1= TESTING; 2= DEMO
+        
+    	URL = ApplicationLoyalAZ.WebServiceURL;
+    	System.out.println("BASE_URL_HIT==="+URL);
+        String NAMESPACE = "http://schemas.xmlsoap.org/soap/envelope/";
+        String SOAP_ACTION = "get_baseurl11";
+        String METHOD_NAME = "get_baseurl11";
+        
+        try {
+            HttpClient httpclient = new DefaultHttpClient();
+            String body="";
+            String bodyLength=new Integer(body.length()).toString();
+            System.out.println(bodyLength);
+
+            URI uri=new URI(URL);
+            HttpPost httpPost = new HttpPost(uri);
+
+            StringEntity entity = new StringEntity(body,HTTP.DEFAULT_CONTENT_CHARSET);
+            httpPost.setEntity(entity);
+            
+
+
+            RequestWrapper requestWrapper=new RequestWrapper(httpPost);
+            requestWrapper.setMethod("POST");
+            Iterator it = params.entrySet().iterator();
+            while (it.hasNext()) 
+            {
+            	Map.Entry pairs = (Map.Entry)it.next();
+            	requestWrapper.setHeader(pairs.getKey().toString(), pairs.getValue().toString());
+            	it.remove(); // avoids a ConcurrentModificationException
+            }
+
+            httpPost.addHeader( "SOAPAction", SOAP_ACTION );
+//          requestWrapper.setHeader("Content-Length",bodyLength);          
+            HttpResponse response = httpclient.execute(requestWrapper);
+            String responseStr = EntityUtils.toString(response.getEntity());
+            
+            Log.d("RESPONSE", responseStr);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+//        String result = null;
+//        Object resultRequestSOAP = null;
+//
+//        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+//        params.put("d", "0");		// 0 = PRODUCTION;;	1= TESTING; 2= DEMO
+//        Iterator it = params.entrySet().iterator();
+//        while (it.hasNext()) {
+//            Map.Entry pairs = (Map.Entry)it.next();
+//            request.addProperty(pairs.getKey().toString(), pairs.getValue());
+//            it.remove(); // avoids a ConcurrentModificationException
+//        }
+//        
+//        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+//                        SoapEnvelope.VER11);
+//
+//        envelope.dotNet = false;
+//        envelope.setOutputSoapObject(request);
+//        
+//        HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+//        ArrayList<HeaderProperty> headerPropertyArrayList = new ArrayList<HeaderProperty>();
+//        headerPropertyArrayList.add(new HeaderProperty("Connection", "close"));
+//        
+////        try {
+//////        	androidHttpTransport.getServiceConnection().setRequestProperty("KeepAlive","true");
+////			androidHttpTransport.getServiceConnection().setRequestProperty("Connection", "close");
+////		} catch (IOException e1) {
+////			// TODO Auto-generated catch block
+////			e1.printStackTrace();
+////		}
+//        androidHttpTransport.debug = true;
+//        String st="";
+//        try {
+//        	System.out.println(request);
+//        	
+//            androidHttpTransport.call(SOAP_ACTION, envelope);
+//            resultRequestSOAP = envelope.getResponse(); // Output received
+//            result = resultRequestSOAP.toString(); // Result string
+//            byte[] bytes = Base64.decode(result, Base64.DEFAULT);
+//            
+//    		try {
+//    			st = new String(bytes,"UTF-8");
+//    		} catch (UnsupportedEncodingException e) {
+//    			// TODO Auto-generated catch block
+//    			e.printStackTrace();
+//    		}
+//    		Log.d("BASE URL SET",st);
+//    		ApplicationLoyalAZ.baseURLSet=true;
+//    		ApplicationLoyalAZ.WebServiceURL = st;
+//        } catch (Exception e) {
+//            e.printStackTrace(); 
+//            Log.e("SendSOAPRequest_EXCEPTION", e.getMessage());
+//        }
+	}
+	
+	*/
+	
+	
+    public String SendSOAPRequest(String pMethodName,LinkedHashMap<String, String>params)
+    {
+    	
+    	if(ApplicationLoyalAZ.baseURLSet==false)
+    	{
+    		// Set the base URL call first.
+    		setBaseURL();
+    	}
+    	
+    	URL = ApplicationLoyalAZ.WebServiceURL;
+    	System.out.println("ACUTAL_URL_HIT==="+URL);
+        String SOAP_ACTION = pMethodName;
+        String result = "";
+/*
+        Iterator it = params.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pairs = (Map.Entry)it.next();
+            Log.d(pairs.getKey().toString(), pairs.getValue().toString());
+            request.addProperty(pairs.getKey().toString(), pairs.getValue().toString());
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        */
+        result = this.callWebService(SOAP_ACTION, params);
+//        result = Helper.GetElementValue(responseXML, "return");
+
+        /*
+        
+        
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                        SoapEnvelope.VER11);
+
+        envelope.dotNet = false;
+        envelope.setOutputSoapObject(request);
+        
+
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+        androidHttpTransport.debug = true;
+
+        try {
+//        	System.out.println(request);
+        	
+            androidHttpTransport.call(SOAP_ACTION, envelope);
+            resultRequestSOAP = envelope.getResponse(); // Output received
+            result = resultRequestSOAP.toString(); // Result string
+            return result;
+            
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Log.e("SendSOAPRequest_EXCEPTION", e.getMessage());
+        }
+        
+        */
+        return result;
+    }
+
+}

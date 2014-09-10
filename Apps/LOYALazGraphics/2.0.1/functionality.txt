@@ -1,0 +1,27 @@
+We recently dicussed with Miexie on initial implementation plan.
+I suggest the we have this UI on the My Program List. Please see attached file.
+We can have the colored headings so the users will know which one is a Programs type and Savings type.
+Harry, as for the XML suggestion, maybe we can have this:
+<Program id="6" pid="8A6A" act="0" name="Caci " tagline="This is a Savings Program" type="" typename="Savings" pt_loc_balance="3" pt_balance="3" pt_target="8" pic_logo="http://loyalaz.com/test/images/uploads/programs/logo/8282013-686B6.jpg" pic_front="http://loyalaz.com/test/images/inactive/14.png" pic_back="http://loyalaz.com/test/images/inactive/14.png" com_id="14" com_name="Caci" com_web1="" com_web2="" com_phone="0279468700" lat="7.049174" lng="125.590866" fbstatus="" coupon_no="" u="1" active="1" com_email="todd.gorton@xtra.co.nz" c="#f5b3b3" pins="0001,0002,0003"  />
+I think we have to add new attributes typename will have a value of Programs or Savings, pins will have values of user pins for the Store Staff (Is it possible to explode this value everytime a comma shows?) each comma is represented by user pin.
+Kind Regards,
+Edler
+
+
+
+
+Dmitri recently added some new specifications with regards to the next release:
+1. Introducing new program type: 'SAVINGS CARD’ in addition to PER-SPENT and PER-ITEM program types.
+Abstract. Many retailers nowadays are selling 'pre-purchased' savings cards. For example a cafe sells coffe for $3 per cup. They also promote SAVING card that cost $25 to buy, loaded with 10 blank places for stamps (savings points – that are stamped when used) and enables holder to redeem each point for 1 cup of coffee. Essentially enables customer to buy a coffee for $2.5 instead of $3 - saving $5 over 10 purchases. So instead of spending $30 for 10 cups of coffee, Customer is enabled to purchase SAVINGS card for $25.
+Our goal is to implement this with minimal functionality changes. We will have to intro new type of the program 'SAVINGS CARD'.
+1.1 It will reside in same 'My Programs' menu. Instead of counting loyalty points upwards - from 1 to redemption limit. It will count points downwards from say 10 down to 1. Once last savings point is used, the card changes its colour to RED (from white). And will be required to be ‘recharged’ before it can be used again.
+We will treat this type of program as just a new program that will require a new QR code and A4 QR code sheet. The USE of SAVINGS points will be by scanning [savings program] QR code.
+1.2 ‘Loading’ (for the first time usage of savings card) or ‘Recharge’ (for subsequent uses) of savings card  will take place when customer will scan above QR code for first time or next after reaching the limit of spending card. The dialog box will appear ‘To recharge or load your SAVINGS card – please show your handset to staff member for validation’ with options ‘OK’, ‘Cancel’.
+1.2.1 Subtraction of savings points occurs when Customer scans [savings card] QR code. Message with headline: ‘Show this to clerk:’, message ‘Successfully used one savings point’, option ‘OK’ – Company staff member will tap OK and give customer cup of coffee with no charge. If two or more savings points are used – above process has to be repeated as many times as many points the Customer wishes to use. The results of this process will be reduced number of available savings points (shown in My Program list). My Program list will show this as ‘Available X out of Y’ – where X is number of available savings points, Y is total number of savings points that was purchased initially.
+1.2.2 When ‘OK’ is tapped, ‘Enter PIN number:’ screen will appear (similar to iPhone lock screen) with two options ‘OK’ or ‘Cancel’ – staff member will have to enter their PIN number. After staff member enters their unique OR common company pin number – LAZ MobApp will verify it (preferable without round trip to server – which means that valid PIN numbers for Company will be downloaded to MobApp at last Sync event). If local PIN number validation is failed, MobApp will try to connect the server and validate it against WebApp (this is in case if new PIN number is introduced, but Customer didn’t sync the app yet). If validation is failed ‘Incorrect PIN number’ with one option ‘OK’ dialogue box is shown. The savings card is not recharged and MobApp will return to ‘My Programs’ list screen, showing current program red. Program is not loaded or recharged.
+1.2.3 If PIN number is validated and is correct – the Program is loaded with savings points as per program setup. Validating staff member IF is recorded in database to enable reporting on who validates the loading or recharge.
+2. Redemption (or SAVINGS CARD loading) validation. Each Company will have ability to setup multiple 4 digit PIN numbers one per employee. Company also can change any PIN at any given time, or delete PIN number if the employee is no longer works for the company (Employee is never deleted from database – just marked ‘active or ‘non-active’ so that reporting can be ran using emplyees that are no longer work for the Company). PIN numbers will enable us to show in the redemption report which employee authorized redemption.
+ 
+Eventually we will be looking at using same process for ‘VERIFYING the REDEMPTION’ of our current loyalty Programs in future releases. Meanwhile – the rest of functionality will remain same as now.
+Kind Regards,
+Edler

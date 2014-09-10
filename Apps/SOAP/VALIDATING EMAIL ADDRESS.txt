@@ -1,0 +1,33 @@
+VALIDATING EMAIL ADDRESS  
+
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<validate_email> 
+<email xsi:type="xsd:string">BASE64 customer email address here</email> 
+</validate_email>
+</SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<ns1:validate_emailResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+ <return xsi:type="xsd:string">
+ <exists xsi:type="xsd:int">
+  {  0-Doesn't exist | 1-Does exist }      
+ </exists>
+ <active xsi:type="xsd:int">
+  {  0 - Inactive | 1 - Active }      
+ </active>
+ </return>  
+</ns1:validate_emailResponse>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

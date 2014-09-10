@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:background="@color/titleBackground" >
+
+        <Button
+            android:id="@+id/buttonMyCouponsBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/back_button_states" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/listViewMyCoupons"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="247dp"
+        android:layout_margin="10px"
+        android:layout_weight="1.01" >
+    </ListView>
+
+</LinearLayout>

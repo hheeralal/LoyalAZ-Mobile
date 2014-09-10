@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;LoyalAZ/assets/fonts/OpenSans-ExtraBold.ttf&apos; to &apos;opensans-extrabold.ttf&apos;" description="Rename resource &apos;OpenSans-ExtraBold.ttf&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="assets/fonts/OpenSans-ExtraBold.ttf" name="opensans-extrabold.ttf" stamp="1406568972795" updateReferences="true"/>
+</session>

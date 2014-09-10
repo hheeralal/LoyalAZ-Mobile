@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+    <LinearLayout android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:layout_width="match_parent">
+        <ImageView android:src="@drawable/ic_launcher" android:layout_height="64px" android:id="@+id/imageViewCpnLogo" android:layout_width="64px"></ImageView>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="237dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView android:text="TextView" android:paddingLeft="15px"  android:textSize="16sp" android:id="@+id/textView_CpnName" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+            <TextView android:text="description"    android:paddingLeft="15px" android:textSize="16sp" android:id="@+id/textView_CpnDescription" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+            <TextView android:text="address"    android:paddingLeft="15px" android:textSize="16sp" android:id="@+id/textView_CpnAddress" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+            <TextView
+                android:id="@+id/textView_CpnDistance"  android:paddingLeft="15px"   android:textSize="16sp" 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5 km" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_gravity="right"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/buttonCpnDelete"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/delete_button_states"
+                 />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

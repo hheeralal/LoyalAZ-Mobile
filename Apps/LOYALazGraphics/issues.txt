@@ -1,0 +1,13 @@
+Thanks for this update.
+I tested the build and here are the fixes that we need to consider:
+Find Programs is working also the the refresh upon sliding down is working.
+I scanned a program and made a "Manual Sync", the app crashes, please see attached file for the message form Bugsense.
+After it crashed, tried to open the app again, it leads me to Registration Page.
+We also need fixes for the FB status sharing [Live site]:
+Dmitri sent me an email regarding this issue, he shared a status on FB wherein he get a point from one of the programs, but his status has been posted twice.
+Please see this scrrenshot: http://prntscr.com/1hl6v3
+I think this issue happen only on the very first sharing of the post. Succeeding Shares will only post 1 status.
+On the Android:
+The FB sharing feature is not working. I tapped Yes to share it to FB, then it leads me to facebook setting to enable it . Tapped OK, but when I checked my profile, there were now FB status on it.
+I turn off my FB sharing feature, Go to the Main page, then go to the setup page to turn on again the FB sharing and tap the Done button.
+I go back to the Setup page again but the FB sharing Feature is still Turn off. This issue only Happens on Android, IOS is working well.

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/titleBackground"
+        android:paddingBottom="5dp"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/buttonFindProgramsBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/back_button_states" />
+
+        <Button
+            android:id="@+id/buttonFindProgramsCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/camera_button_states" />
+
+
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/buttonFindProgramsReferBusiness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/refer_button_states" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ToggleButton
+            android:id="@+id/toggleButtonViewType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textOn="List View"
+            android:textOff="Map View"
+            android:text="List View" />
+
+    </LinearLayout>
+
+    <com.markupartist.android.widget.PullToRefreshListView
+        android:id="@+id/listViewMorePrograms"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_margin="5px"
+        android:layout_height="wrap_content" >
+    </com.markupartist.android.widget.PullToRefreshListView>
+
+<RelativeLayout
+    android:id="@+id/relativeLayoutMap"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.SupportMapFragment" />
+
+</RelativeLayout>
+
+</LinearLayout>

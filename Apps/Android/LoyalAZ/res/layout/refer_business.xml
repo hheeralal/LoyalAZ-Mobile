@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+        <RelativeLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_margin="10px"
+        android:gravity="right"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="Refer A Business" />
+
+        <Button
+            android:id="@+id/buttonRefBusinessSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text = "Save"
+             />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/textRefCompanyName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Company name"
+            android:inputType="textPersonName" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/textRefCompanyPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Company Phone" />
+
+        <EditText
+            android:id="@+id/textRefCompanyEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Company email"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/textRefCompanyMgrFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Manager First Name"
+            android:inputType="textPersonName" />
+        
+        <EditText
+            android:id="@+id/textRefCompanyMgrLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Manager Last Name"
+            android:inputType="textPersonName" />
+        
+        <EditText
+            android:id="@+id/textRefCompanyReason"
+            android:layout_width="match_parent"
+            android:layout_height="88dp"
+            android:hint="Reason for recommendation"
+            android:inputType="textMultiLine"
+            android:maxLines="5" />
+        
+        <EditText
+            android:id="@+id/textRefCompanyAddress"
+            android:layout_width="match_parent"
+            android:layout_height="94dp"
+            android:hint="Company Address"
+            android:inputType="textMultiLine|textPostalAddress"
+            android:maxLines="5" />
+        
+    </LinearLayout>
+
+</LinearLayout>
+</ScrollView>

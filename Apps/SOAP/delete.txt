@@ -1,0 +1,32 @@
+http://www.loyalaz.com/test/index.php/c_login?msg=0
+
+
+16.) DEACTIVATE USER ACCOUNT      
+_____________________________   
+
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<deactivate_user> 
+  <uid xsi:type="xsd:int">{user id}</uid>    
+</deactivate_user>     
+</SOAP-ENV:Body>   
+</SOAP-ENV:Envelope>          
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<ns1:deactivate_userResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+ 
+     <return xsi:type="xsd:int"> { 0 = error,  1 = successfully deactivate }  </return>      
+ 
+</ns1:deactivate_userResponse>                            
+</SOAP-ENV:Body>      
+</SOAP-ENV:Envelope>

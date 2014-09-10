@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+    <LinearLayout android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:layout_width="match_parent">
+
+        <ImageView
+            android:id="@+id/ivPrgType"
+            android:layout_width="54sp"
+            android:layout_height="33sp"
+            android:src="@drawable/heart" />
+
+        <ImageView android:src="@drawable/ic_launcher" android:layout_height="64px" android:id="@+id/imageViewFPLogo" android:layout_width="64px"></ImageView>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView_FPName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15px"
+                android:text="TextView"
+                android:textSize="16sp" />
+
+            <TextView android:text="description"    android:paddingLeft="15px" android:textSize="16sp" android:id="@+id/textView_FPDescription" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+            <TextView
+                android:id="@+id/textView_FPDistance"  android:paddingLeft="15px"   android:textSize="16sp" 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5 km" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="95px"
+            android:layout_gravity="right"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/buttonPrgDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/delete_button_states"
+                 />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

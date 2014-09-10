@@ -1,0 +1,771 @@
+1.)GETTING BASE URL
+______________________________________________
+
+URL=http://www.loyalaz.com/setup/
+
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<get_baseurl> 
+	<d xsi:type="xsd:int">{1=used test site, 0 or empty = used az site}</d> 
+</get_baseurl>
+
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<ns1:get_baseurlResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+
+<return xsi:type="xsd:string">BASE64 BASE URL{test site=http://loyalaz.com/test/p/server.php or 
+					      az site=http://loyalaz.com/az/p/server.php } </return>
+</ns1:get_baseurlResponse>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+BASE URL=http://loyalaz.com/test/p/server.php (PLEASE REFER TO THE BASE URL  BEING SENT/REQUESTED)
+
+2.)GETTING XMLFILES (Fresh XMLDB & Country)
+_____________________________
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<get_xmlfiles> 
+</get_xmlfiles> 
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<ns1:get_xmlfilesResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+
+	<return xsi:type="xsd:string">
+			<countryxml xsi:type="xsd:string">BASE64 COUNTRY XML FILE</countryxml>
+			<xmldb xsi:type="xsd:string">BASE64 FRESH XMLDB FILE</xmldb>
+	</return>
+</ns1:get_xmlfilesResponse>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+3.)USER REGISTRATION
+_____________________________
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<register_user> 
+<xml_base64 xsi:type="xsd:string">xml encoded here</xml_base64> 
+</register_user> </SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<ns1:register_userResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+
+	<return xsi:type="xsd:string">
+			<st xsi:type="xsd:string">Security token here</st>
+			<uid xsi:type="xsd:int">Userid here</uid>
+	</return>
+
+
+</ns1:register_userResponse>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.)PROGRAMS SYNC PROCESS
+_____________________________
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<sync_xmldb> 
+<xml_base64 xsi:type="xsd:string">xml encoded here</xml_base64> 
+</sync_xmldb> </SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<ns1:sync_xmldbResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+
+<return xsi:type="xsd:string">Successfully Synced!</return>
+</ns1:sync_xmldbResponse>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+5.)GET COUPON NO PROCESS
+_____________________________
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<process_coupon> 
+
+<id xsi:type="xsd:int">program id</id> 
+<uid xsi:type="xsd:int">userid</uid>
+<pt_balance xsi:type="xsd:int">points balance</pt_b>
+<pt_target xsi:type="xsd:int">points target</pt_t>
+<com_id xsi:type="xsd:int">company id</com_id>
+<request xsi:type="xsd:string">xml request as string here..</request>
+
+
+</process_coupon> </SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<ns1:process_couponResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+
+<return xsi:type="xsd:int">coupon no.</return>
+</ns1:process_couponResponse>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+6.)REDEMPTION PROCESS
+_____________________________
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<process_redemption> 
+
+<id xsi:type="xsd:int">program id</id> 
+<uid xsi:type="xsd:int">userid</uid>
+<pt_balance xsi:type="xsd:int">points balance</pt_balance>
+<coupon xsi:type="xsd:int">coupon no</coupon>
+
+
+</process_redemption> </SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<ns1:process_redemptionResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+
+<return xsi:type="xsd:boolean">TRUE/FALSE (TRUE -if successfully redemed, FALSE-if not)</return>
+</ns1:process_redemptionResponse>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+7.)FIND NEAR PROGRAMS (w/ in 10km from Origin)
+_____________________________
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<find_moreprogs> 
+	<uid xsi:type="xsd:int">customer id here</uid>  
+	<lat xsi:type="xsd:float">latitude here</lat> 
+	<lng xsi:type="xsd:float">longitude here</lng> 
+</find_moreprogs>
+</SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<ns1:find_moreprogsResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+
+<return xsi:type="xsd:string">Programs in XML Base64 format</return>
+</ns1:find_moreprogsResponse>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+8.)XMLDB Recovery
+_____________________________
+
+
+a.) VALIDATING EMAIL ADD   
+
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<validate_email> 
+<email xsi:type="xsd:string">BASE64 customer email address here</email> 
+</validate_email>
+</SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<ns1:validate_emailResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+ <return xsi:type="xsd:string">
+	<exists xsi:type="xsd:int">
+		{  0-Doesn't exist | 1-Does exist }      
+	</exists>
+	<active xsi:type="xsd:int">
+		{  0 - Inactive | 1 - Active }      
+	</active>
+	</return>  
+</ns1:validate_emailResponse>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+   
+
+______________________________________________________
+
+b.) SENDING CUSTOMER EMAIL 
+
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<send_email> 
+<email xsi:type="xsd:string">BASE64 customer email address here</email> 
+</send_email>
+</SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<ns1:send_emailResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+<return xsi:type="xsd:boolean">TRUE/FALSE(TRUE-if successfully sent security token | FALSE-if not successful)</return>
+</ns1:send_emailResponse>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+________________________________________________________
+    
+
+c.) SENDING SECURITY TOKEN NEEDED FOR XMLDB RECOVERY
+
+
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<xmldb_recovery> 
+<token xsi:type="xsd:string">BASE64 SECURITY TOKEN HERE</token> 
+</xmldb_recovery>
+
+</SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<ns1:xmldb_recoveryResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+
+<return xsi:type="xsd:string">BASE64 XMLDB/FALSE (BASE64 XMLDB-if successful | FALSE-if not successful)</return>
+
+</ns1:xmldb_recoveryResponse>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+9.)RECOMMEND A COMPANY PROCESS
+_____________________________
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<recommend_company> 
+<rec_cname xsi:type="xsd:string">recommended company name</rec_cname> 
+<rec_phone xsi:type="xsd:string">recommended company phone</rec_phone> 
+<rec_email xsi:type="xsd:string">recommended company email</rec_email> 
+<rec_mgrfname xsi:type="xsd:string">recommended company manager fname</rec_mgrfname> 
+<rec_mgrlname xsi:type="xsd:string">recommended company manager lname</rec_mgrlname> 
+<rec_whyinvited xsi:type="xsd:string">reason for recommendation</rec_whyinvited> 
+<rec_address xsi:type="xsd:string">rec_company address</rec_address> 
+<com_id xsi:type="xsd:int">existing company id (owner of the program)</com_id> 
+<lat xsi:type="xsd:float">customer latitude</lat> 
+<lng xsi:type="xsd:float">customer longitude</lng>    
+</recommend_company> </SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+
+<ns1:recommend_companyResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+
+<return xsi:type="xsd:boolean">
+TRUE/FALSE(TRUE-if successfully recommend | FALSE-if not successful)
+</return>
+
+</ns1:recommend_companyResponse>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    
+
+
+10.)FIND MORE COUPON PROCESS
+_____________________________
+
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<find_morecoupons>    
+  <uid xsi:type="xsd:int">customer id here</uid>  
+  <lat xsi:type="xsd:float">{customer current latitude coordinate}</lat> 
+  <lng xsi:type="xsd:float">{customer current latitude coordinate}</lat> 
+</find_morecoupons>
+
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<ns1:find_morecouponsResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+
+<return xsi:type="xsd:string">
+    {More Coupons in BASE64 XML format}
+</return>
+
+</ns1:find_morecouponsResponse>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    
+
+
+11.)COUPON VALIDATION PROCESS
+_____________________________
+
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<coupon_validation> 
+  <uid xsi:type="xsd:int">{customer id}</uid> 
+  <id xsi:type="xsd:int">{coupon id}</id>
+  <guid xsi:type="xsd:string">{coupon guid}</guid>  
+  <companyid xsi:type="xsd:int">{Currently logged in company id}</companyid> 
+</coupon_validation>   
+
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>   
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<ns1:coupon_validationResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+
+<return xsi:type="xsd:int">
+    {One of these integers:
+	1-coupon has been successfully validated
+
+
+        For Errors:	
+	2-system error,
+	3-coupon expired (expiration based coupon)
+	4-coupon redemption exceeds its limitation (quantity based coupon)
+	5-user has already redeemed the same coupon
+	6-guid has already been used    
+	7-Not allowed to scan other company's coupon    
+	 }      
+</return>
+
+</ns1:coupon_validationResponse>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    
+
+
+12.)COUPON REDEMPTION PROCESS
+_____________________________
+
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<coupon_redemption> 
+  <uid xsi:type="xsd:int">{customer id}</uid> 
+  <id xsi:type="xsd:int">{coupon id}</id>
+  <guid xsi:type="xsd:string">{coupon guid}</guid>  
+  <companyid xsi:type="xsd:int">{Currently logged in company id}</companyid>
+</coupon_redemption>   
+
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>   
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<ns1:coupon_redemptionResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+
+<return xsi:type="xsd:int">
+    {One of these integers:
+	0-system error.
+	1-Successfully redeemed.      
+    }      
+</return>
+
+</ns1:coupon_redemptionResponse>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    
+
+
+13.)ADD USER COUPON PROCESS   
+_____________________________
+
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<add_usercoupon> 
+  <uid xsi:type="xsd:int">{customer id}</uid> 
+  <id xsi:type="xsd:int">{coupon id}</id>
+  <guid xsi:type="xsd:string">{coupon guid}</guid> 
+  <coupontype xsi:type="xsd:string">{coupon type "expiration based" or "quantity based"} </coupontype>  
+  <com_id xsi:type="xsd:int">{owner company id of the coupon} </com_id> 
+</add_usercoupon>     
+
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>   
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<ns1:add_usercouponResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+ 
+    <return xsi:type="xsd:string">
+			<status xsi:type="xsd:int">
+			    {
+			 		1 ( successfully added )      
+					2 (system error)     
+					3 (user's coupon already exists) 
+				}      
+			</status>
+			<pic_qrcode xsi:type="xsd:string">{URL path for generated coupon QRCode image }</pic_qrcode>
+	</return>     
+
+</ns1:add_usercouponResponse>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    
+
+
+14.)REMOVE USER COUPON PROCESS     
+_____________________________   
+
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<remove_usercoupon> 
+  <uid xsi:type="xsd:int">{customer id}</uid> 
+  <id xsi:type="xsd:int">{coupon id}</id>    
+</remove_usercoupon>     
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>   
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<ns1:remove_usercouponResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+ 
+    <return xsi:type="xsd:int">
+			{
+			  1 ( successfully removed )  ||   0 ( system error )       
+			}
+	</return>     
+
+</ns1:remove_usercouponResponse>         
+</SOAP-ENV:Body>      
+</SOAP-ENV:Envelope>
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    
+
+
+15.)LOGIN USER PROCESS     
+_____________________________   
+
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<login_user> 
+  <username xsi:type="xsd:string">{username in base64 format}</username> 
+  <password xsi:type="xsd:string">{password in base64 format}</password>        
+</login_user>     
+</SOAP-ENV:Body>   
+</SOAP-ENV:Envelope>          
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<ns1:login_userResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+ 
+     <return xsi:type="xsd:string">
+			<status xsi:type="xsd:int">
+			{
+			    1-user has been successfully validated (authorized user)     
+				2-system error,
+				3-not authorized user
+				4-incorrect username
+				5-incorrect password                  
+			}
+			</status>
+			<companyid xsi:type="xsd:int">{Currently logged in company id}</companyid>
+			<companyname xsi:type="xsd:string">{Currently logged in company name}</companyname>      
+	  </return>      
+	
+	
+
+</ns1:login_userResponse>                            
+</SOAP-ENV:Body>      
+</SOAP-ENV:Envelope>  
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    
+
+
+16.) DEACTIVATE USER ACCOUNT      
+_____________________________   
+
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<deactivate_user> 
+  <uid xsi:type="xsd:int">{user id}</uid>    
+</deactivate_user>     
+</SOAP-ENV:Body>   
+</SOAP-ENV:Envelope>          
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<ns1:deactivate_userResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+ 
+     <return xsi:type="xsd:int"> { 0 = error,  1 = successfully deactivate }  </return>      
+	
+</ns1:deactivate_userResponse>                            
+</SOAP-ENV:Body>      
+</SOAP-ENV:Envelope>     
+
+//--------------------------------------------------------------------------------------
+
+17.) DELETE PROGRAM      
+_____________________________   
+
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<remove_userprogram>
+	<uid xsi:type="xsd:int">{user id}</uid>
+	<id xsi:type="xsd:int">{program id}</id>     
+</remove_userprogram> 
+</SOAP-ENV:Body>   
+</SOAP-ENV:Envelope>          
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+<ns1:remove_userprogramResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+ 
+     <return xsi:type="xsd:int"> { 0 = error,  1 = successfully deleted }  </return>      
+	
+</ns1:remove_userprogramResponse>                            
+</SOAP-ENV:Body>      
+</SOAP-ENV:Envelope>  
+
+
+
+
+18.) GETTING ADVERTISEMENT      
+_____________________________       
+
+Request:
+------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+
+<SOAP-ENV:Body>
+ <get_ads>
+    <uid xsi:type="xsd:int">{Customer ID}</uid>
+	<device xsi:type="xsd:string">{device type}</device>     
+ </get_ads> 
+</SOAP-ENV:Body>   
+</SOAP-ENV:Envelope>          
+
+
+
+Response:
+---------------
+<?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+<SOAP-ENV:Body><ns1:get_adsResponse xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/">
+
+<return>
+	<image xsi:type="xsd:string">{full URL image path}</image>
+	<link xsi:type="xsd:string">{image link}</link>
+	<duration xsi:type="xsd:int">{duration}</duration>
+</return>
+
+</ns1:get_adsResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
