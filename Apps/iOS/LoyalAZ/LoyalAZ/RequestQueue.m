@@ -56,6 +56,8 @@ NSString *const HTTPResponseErrorDomain = @"HTTPResponseErrorDomain";
 
 @implementation RQOperation
 
+@synthesize executing,cancelled,finished;
+
 + (RQOperation *)operationWithRequest:(NSURLRequest *)request
 {
     return [[self alloc] initWithRequest:request];
@@ -81,10 +83,10 @@ NSString *const HTTPResponseErrorDomain = @"HTTPResponseErrorDomain";
 {
     @synchronized (self)
     {
-        if (!_executing && !_cancelled)
+        if (!executing && !cancelled)
         {
             [self willChangeValueForKey:@"isExecuting"];
-            _executing = YES;
+            executing = YES;
             [_connection scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
             [_connection start];
             [self didChangeValueForKey:@"isExecuting"];
@@ -96,10 +98,10 @@ NSString *const HTTPResponseErrorDomain = @"HTTPResponseErrorDomain";
 {
     @synchronized (self)
     {
-        if (!_cancelled)
+        if (!cancelled)
         {
             [self willChangeValueForKey:@"isCancelled"];
-            _cancelled = YES;
+            cancelled = YES;
             [_connection cancel];
             [self didChangeValueForKey:@"isCancelled"];
             
@@ -114,12 +116,12 @@ NSString *const HTTPResponseErrorDomain = @"HTTPResponseErrorDomain";
 {
     @synchronized (self)
     {
-        if (_executing && !_finished)
+        if (executing && !finished)
         {
             [self willChangeValueForKey:@"isExecuting"];
             [self willChangeValueForKey:@"isFinished"];
-            _executing = NO;
-            _finished = YES;
+            executing = NO;
+            finished = YES;
             [self didChangeValueForKey:@"isFinished"];
             [self didChangeValueForKey:@"isExecuting"];
         }

@@ -179,7 +179,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     tempTextField=textField;
     [self ScrollTableView];
     if(textField.tag==1)
-        [self ShowPopup];
+        [self ShowPopup2];
     //[self ShowPopup];
 }
 
@@ -263,6 +263,12 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 }
 
 
+-(void)ShowPopup2
+{
+    SelectCountryVC *selectCountryVC = [[SelectCountryVC alloc]initWithNibName:@"SelectCountryVC" bundle:nil countryName:countryName.text];
+    selectCountryVC.delegate = self;
+    [self presentViewController:selectCountryVC animated:YES completion:nil];
+}
 
 
 -(void)ShowPopup
@@ -725,6 +731,16 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     [self HideActivityView];
 }
 
+-(void)SelectCountryDidCancelled
+{
+    
+}
+
+-(void)SelectCountryDidFinish:(Country *)selectedCountry
+{
+    countryName.text = selectedCountry.name;
+    countryCode.text = selectedCountry.code;
+}
 
 
 @end

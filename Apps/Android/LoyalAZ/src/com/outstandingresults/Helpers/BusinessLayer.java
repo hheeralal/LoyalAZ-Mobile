@@ -89,31 +89,32 @@ public class BusinessLayer {
 	
 	public void SyncDB()
 	{
-		isSyncTask = true;
-		CommunicationManager comMgr = new CommunicationManager();
-		XStream xt = Helper.ConfigureObjectAttributes();
-		
-		if(ApplicationLoyalAZ.loyalaz.programs==null)
-			ApplicationLoyalAZ.loyalaz.programs = new ArrayList<Program>();
-		
-		if(ApplicationLoyalAZ.loyalaz.coupons==null)
-			ApplicationLoyalAZ.loyalaz.coupons = new ArrayList<Coupon>();		
-		
-		String xml = xt.toXML(ApplicationLoyalAZ.loyalaz);
-		xml = xml.replace("\n", "");
-//		System.out.println("SYNC_XML_SENT="+xml);
-		byte[] bytes = xml.getBytes();
-		String base64XML = Base64.encodeToString(bytes, Base64.DEFAULT);
-        LinkedHashMap<String, String>soap_params = new LinkedHashMap<String, String>();
-        soap_params.put("xml_base64", base64XML);
-        String s= comMgr.SendSOAPRequest("sync_xmldb", soap_params,true);
-//        System.out.println("SYNC_RECD="+s);
-        ApplicationLoyalAZ.loyalaz = (LoyalAZ) xt.fromXML(s);
-        
         try {
+    		isSyncTask = true;
+    		CommunicationManager comMgr = new CommunicationManager();
+    		XStream xt = Helper.ConfigureObjectAttributes();
+    		
+    		if(ApplicationLoyalAZ.loyalaz.programs==null)
+    			ApplicationLoyalAZ.loyalaz.programs = new ArrayList<Program>();
+    		
+    		if(ApplicationLoyalAZ.loyalaz.coupons==null)
+    			ApplicationLoyalAZ.loyalaz.coupons = new ArrayList<Coupon>();		
+    		
+    		String xml = xt.toXML(ApplicationLoyalAZ.loyalaz);
+    		xml = xml.replace("\n", "");
+//    		System.out.println("SYNC_XML_SENT="+xml);
+    		byte[] bytes = xml.getBytes();
+    		String base64XML = Base64.encodeToString(bytes, Base64.DEFAULT);
+            LinkedHashMap<String, String>soap_params = new LinkedHashMap<String, String>();
+            soap_params.put("xml_base64", base64XML);
+            String s= comMgr.SendSOAPRequest("sync_xmldb", soap_params,true);
+            System.out.println("SYNC_RECD="+s);
+            ApplicationLoyalAZ.loyalaz = (LoyalAZ) xt.fromXML(s);
 			Helper.SaveApplicationObjectToDB(ApplicationLoyalAZ.loyalaz);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			Log.d("Exception","SyncDB exception");
 			e.printStackTrace();
 		}
         
@@ -274,10 +275,10 @@ public class BusinessLayer {
         
         soap_params.put("uid", uid);
         soap_params.put("id", programId);
-        System.out.println(soap_params);
+//        System.out.println(soap_params);
         
         String xmlResponse= comMgr.SendSOAPRequest("remove_userprogram", soap_params);
-        System.out.println(xmlResponse);
+//        System.out.println(xmlResponse);
         
         return xmlResponse;
         
@@ -513,8 +514,19 @@ public class BusinessLayer {
 			if(ApplicationLoyalAZ.loyalaz.programs.get(i).equals(prg))
 			{
 				ApplicationLoyalAZ.loyalaz.programs.get(i).act="";
-				ApplicationLoyalAZ.loyalaz.programs.get(i).pt_balance="0";
-				ApplicationLoyalAZ.loyalaz.programs.get(i).pt_loc_balance="0";
+				if(prg.type.equals("1")==true || prg.type.equals("2")==true)
+				{
+					ApplicationLoyalAZ.loyalaz.programs.get(i).pt_balance="0";
+					ApplicationLoyalAZ.loyalaz.programs.get(i).pt_loc_balance="0";
+				}
+				else if(prg.type.equals("4")==true)
+				{
+					if(prg.pt_balance.equals(prg.pt_target)==true)
+					{
+						ApplicationLoyalAZ.loyalaz.programs.get(i).pt_balance="0";
+						ApplicationLoyalAZ.loyalaz.programs.get(i).pt_loc_balance="0";
+					}
+				}
 				ApplicationLoyalAZ.loyalaz.programs.get(i).coupon_no="";
 				try {
 					Helper.SaveApplicationObjectToDB(ApplicationLoyalAZ.loyalaz);
@@ -632,7 +644,7 @@ public class BusinessLayer {
 //				break;
 //			}
 //		}
-		if(prg.type.equals("3")==false) // if the program is per item program type
+		if(prg.type.equals("1")==true || prg.type.equals("2")==true || prg.type.equals("4")==true) // if the program is per item program type
 		{
 			ApplicationLoyalAZ.loyalaz.programs.add(prg);
 			
@@ -644,8 +656,7 @@ public class BusinessLayer {
 					if(prg.pt_loc_balance!="")
 						balance += Integer.parseInt(prg.pt_loc_balance);
 				}
-			}
-			
+			} 
 			
 			for(i=0;i<ApplicationLoyalAZ.loyalaz.programs.size();i++)
 			{
@@ -661,10 +672,18 @@ public class BusinessLayer {
 			
 			try {
 				Helper.SaveApplicationObjectToDB(ApplicationLoyalAZ.loyalaz);
+				
+				if(prg.type.equals("4")==true)
+				{
+					this.SyncDB();
+				}
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+
 		}
 		else // if the program is savings type
 		{
@@ -972,6 +991,23 @@ public class BusinessLayer {
 		prg.pic_front = DownloadImageFromURL(prg.pic_front);
 		prg.pic_back = DownloadImageFromURL(prg.pic_back);
 		return prg;
+	}
+	
+	public String GetProgramAccumulationLevels(Program prg)
+	{
+		String levels = "";
+		for(int i=0;i<ApplicationLoyalAZ.loyalaz.programs.size();i++)
+		{
+			Program tProgram = ApplicationLoyalAZ.loyalaz.programs.get(i);
+			if(tProgram.pid.equals(prg.pid))
+			{
+//				System.out.println("ACCUM="+);
+				levels =levels + "," + tProgram.accum_points;
+//				break;
+			}
+		}
+//		System.out.println("LEVELS="+levels);
+		return levels;
 	}
 	
 	private Coupon DownloadCouponImages(Coupon cpn)

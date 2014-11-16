@@ -33,6 +33,7 @@ public class Program implements Serializable{
 	public String fbstatus;
 	public String pins;
 	public String spt;
+	public String accum_points;
 	
 	public Program()
 	{
@@ -64,6 +65,7 @@ public class Program implements Serializable{
 		fbstatus = "";
 		pins = "";
 		spt = "";
+		accum_points = "";
 	}
 	
 	@Override

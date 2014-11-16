@@ -16,7 +16,7 @@
 
 @implementation FindProgramsVC
 
-
+@synthesize locationManager;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -79,11 +79,14 @@
     
     if([appObject.loyalaz.find_enable isEqualToString:@"1"])
     {
-        locationManager = [[CLLocationManager alloc] init];
-        locationManager.delegate = self;
-        locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest; // 100 m
-        [locationManager startUpdatingLocation];
+        self.locationManager = [[CLLocationManager alloc] init];
+        self.locationManager.delegate = self;
+        self.locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest; // 100 m
+        if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+            [self.locationManager requestWhenInUseAuthorization];
+        }
+        [self.locationManager startUpdatingLocation];
         
         //        BusinessLayer *businessObject = [[BusinessLayer alloc]init];
         //        businessObject.delegate = self;
@@ -620,12 +623,10 @@
 
 #pragma mark Location Functions
 
-- (void)locationManager:(CLLocationManager *)manager
-    didUpdateToLocation:(CLLocation *)newLocation
-           fromLocation:(CLLocation *)oldLocation
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    
-    
+    CLLocation *newLocation =  [locations lastObject];
+    NSLog(@"location manager didUpdateLocations");
     CLLocationCoordinate2D coord;
     coord = newLocation.coordinate;
     //    MKUserLocation *mLocation = [[MKUserLocation alloc]init];
@@ -652,11 +653,50 @@
     
     mapView.region = region;
     
-//    [businessObject FindPrograms:@"7.060835" lngValue:@"125.593475" userId:appObject.loyalaz.user.uid];
+    //    [businessObject FindPrograms:@"7.060835" lngValue:@"125.593475" userId:appObject.loyalaz.user.uid];
     [businessObject FindPrograms:latValue lngValue:lngValue userId:appObject.loyalaz.user.uid];
     //    [latValue release];
     //    [lngValue release];
+
 }
+
+//- (void)locationManager:(CLLocationManager *)manager
+//    didUpdateToLocation:(CLLocation *)newLocation
+//           fromLocation:(CLLocation *)oldLocation
+//{
+//    
+//    NSLog(@"location manager");
+//    CLLocationCoordinate2D coord;
+//    coord = newLocation.coordinate;
+//    //    MKUserLocation *mLocation = [[MKUserLocation alloc]init];
+//    //    mLocation.coordinate = coord;
+//    //    [self mapView:mapView didUpdateUserLocation:mLocation];
+//    
+//    if(searchedOnce)
+//        return;
+//    
+//    searchedOnce = YES;
+//    
+//    BusinessLayer *businessObject = [[BusinessLayer alloc]init];
+//    businessObject.delegate = self;
+//    
+//    
+//    
+//    latValue = [[NSString alloc]initWithFormat:@"%f", coord.latitude];
+//    lngValue = [[NSString alloc]initWithFormat:@"%f", coord.longitude];
+//    
+//    MKCoordinateRegion region = { {0.0, 0.0 }, { 0.0, 0.0 } };
+//    region.center = coord;
+//    region.span.longitudeDelta = 0.05f;
+//    region.span.latitudeDelta = 0.05f;
+//    
+//    mapView.region = region;
+//    
+////    [businessObject FindPrograms:@"7.060835" lngValue:@"125.593475" userId:appObject.loyalaz.user.uid];
+//    [businessObject FindPrograms:latValue lngValue:lngValue userId:appObject.loyalaz.user.uid];
+//    //    [latValue release];
+//    //    [lngValue release];
+//}
 
 
 #pragma mark Action Button Clicks

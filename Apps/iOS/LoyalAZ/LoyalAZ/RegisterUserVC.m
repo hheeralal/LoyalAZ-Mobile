@@ -490,7 +490,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     if(validatingEmail==YES)
     {
-        if(result==NO) // this means email id doesn't exist
+        if(result==YES) // this means email id doesn't exist
         {
             [self ShowActivityView];
             
@@ -504,7 +504,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             [businessObject UserRegistrationStep1];
             validatingEmail = NO;
         }
-        else if(result==YES)
+        else if(result==NO)
         {
             // Show alert to user that email already exists
             // Do you want to recover the data?
@@ -528,6 +528,11 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 - (void)BusinessLayerErrorOccurred:(NSError *)err
 {
     [self HideActivityView];
+    UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Validation" message:@"The email already exists and currently inactive. Please contact system administrator to activate or try another email." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    av.tag=9;
+    [av show];
+    [av release];
+
 }
 
 -(void) DataRecoveryVCDidFinish

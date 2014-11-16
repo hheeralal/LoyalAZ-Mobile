@@ -9,11 +9,12 @@
 #import "Country.h"
 #import "DataRecoveryVC.h"
 #import "RegisterUserVC.h"
+#import "SelectCountryVC.h"
 
 @class RegisterUserVC;
 
 
-@interface SetupVC : CustomVC <UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewDataSource,BusinessLayerDelegate,UIAlertViewDelegate>
+@interface SetupVC : CustomVC <SelectCountryDelegate,UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewDataSource,BusinessLayerDelegate,UIAlertViewDelegate>
 {
     
     

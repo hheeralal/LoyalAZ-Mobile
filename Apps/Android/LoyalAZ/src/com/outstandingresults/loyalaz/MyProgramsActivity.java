@@ -2,6 +2,7 @@ package com.outstandingresults.loyalaz;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -171,7 +172,7 @@ public class MyProgramsActivity extends FragmentActivity   {
 					startActivity(in);
 				}
 				// TODO Auto-generated method stub
-				Toast.makeText(getApplicationContext(),"Selected:",Toast.LENGTH_SHORT).show();
+//				Toast.makeText(getApplicationContext(),"Selected:",Toast.LENGTH_SHORT).show();
 			}
 		});        
         
@@ -321,7 +322,7 @@ public class MyProgramsActivity extends FragmentActivity   {
     		else
     			prg.pins = "";
     		
-    		if(codeValues.length==23)
+    		if(codeValues.length>=23)
     		{
     			prg.spt = codeValues[22];
     		}
@@ -330,15 +331,19 @@ public class MyProgramsActivity extends FragmentActivity   {
     			prg.spt = "1";
     		}
     		
-    		Toast.makeText(MyProgramsActivity.this, prg.spt, 500).show();
+//    		Toast.makeText(MyProgramsActivity.this, prg.spt, 500).show();
     		
-    		if(prg.type.equals("3")==false)
+    		if(prg.type.equals("1")==true || prg.type.equals("2")==true)
     		{
     			this.ProcessPerItemProgramType(prg);
     		}
-    		else
+    		else if(prg.type.equals("3")==true)
     		{
     			this.ProcessSavingProgramType(prg);
+    		}
+    		else if(prg.type.equals("4")==true)
+    		{
+    			this.ProcessAccumulatingProgramType(prg);
     		}
     		
  			
@@ -462,6 +467,133 @@ public class MyProgramsActivity extends FragmentActivity   {
 					//PostToFBWall();
 				}
 			}
+    }
+    
+    
+    private void ProcessAccumulatingProgramType(Program prg)
+    {
+		BusinessLayer businessObject = new BusinessLayer();
+		//if(businessObject.IsProgramExists(prg)==false)
+		if(businessObject.IsProgramWithLocationExists(prg)==false)
+		{
+			if(prg.rt.length()>0)
+			{
+ 		    	Calendar c = Calendar.getInstance();
+ 		    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
+ 		        String currentDate = df.format(c.getTime());
+ 				prg.s_dt = currentDate; 
+			}
+			
+			if(prg.spt.equals("")==false)
+			{
+				prg.pt_balance = prg.spt;
+				prg.pt_loc_balance = prg.spt;
+			}
+			else
+			{
+				prg.pt_balance = "1";
+				prg.pt_loc_balance = "1";
+			}
+
+			try
+			{
+	    		AsyncAddNewProgram taskAddProgram = new AsyncAddNewProgram();
+	    		taskAddProgram.execute(prg);
+	    		fbFeedMessage=  "I've just collected a reward point at " + prg.com_name + "," + prg.com_web2 + " using www.LoyalAZ.com";
+	    		if(prg.fbstatus.equals(""))
+	    			fbFeedCaption = "";
+	    		else
+	    			fbFeedCaption = prg.fbstatus;
+			}
+			catch(Exception e)
+			{
+				System.out.println("Exception in ProcessAccumulatingProgramType");
+				e.printStackTrace();
+			}
+
+    		
+		//taskAddProgram.execute(prg).get();
+		//ShowMessage("1",prg.pt_target);
+		}
+		else
+		{
+			
+			if(businessObject.IsProgramPendingToRedeem(prg))
+			{
+				//Program redeem is pending.
+//				
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+				alertDialogBuilder.setTitle("LoyalAZ");
+				alertDialogBuilder
+				.setMessage("This program is already pending for redemption. Click this program to redeem.")
+				.setCancelable(false)
+				.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						dialog.dismiss();
+						//Save the ACT state.
+					}
+				});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+
+				return;
+			}
+			
+			if(prg.rt.length()>0)
+			{
+				if(businessObject.ValidateScanFrequency(prg)==false)
+				{
+					ShowFrequencyErrorMessage();
+					return;
+				}
+			}
+			
+			// update the program count.
+			prg = businessObject.IncrementProgramBalance(prg);
+			String levels[] = prg.accum_points.split(",");
+			boolean levelReached = false;
+			for(int levelCtr = 0;levelCtr<levels.length;levelCtr++)
+			{
+				if(prg.pt_balance.equals(levels[levelCtr]))
+				{
+					levelReached = true;
+					if(Helper.IsNetworkAvailable())
+					{
+	 		    		AsyncGetCouponNumber taskGetCoupon = new AsyncGetCouponNumber();
+	 		    		try {
+							prg.coupon_no = taskGetCoupon.execute(prg).get();
+							
+							ShowRedeemMessage(prg);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (ExecutionException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					else
+					{
+						// Show message that internet is required to get Coupon number.
+						//BusinessLayer businessObject1 = new BusinessLayer();
+						businessObject.UpdateProgramActState(prg);
+						ShowInternetErrorMessage();
+					}
+					break;
+				}
+			}
+			if(levelReached==false)
+			{
+				fbFeedMessage=  "I've just collected a reward point at " + prg.com_name + "," + prg.com_web2 + " using www.LoyalAZ.com";
+ 	    		if(prg.fbstatus.equals(""))
+ 	    			fbFeedCaption = "";
+ 	    		else
+ 	    			fbFeedCaption = prg.fbstatus;
+ 	    		
+				ApplicationLoyalAZ.fbMessage = "I've just collected a reward point at " + prg.com_name + "," + prg.com_web2 + " using LoyalAZ.com";
+				ShowMessage(prg.pt_balance,prg.pt_target);
+			}
+		}
     }
     
     private void ProcessSavingProgramType(final Program prg)
@@ -646,7 +778,7 @@ public class MyProgramsActivity extends FragmentActivity   {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setTitle("LoyalAZ");
 		alertDialogBuilder
-		.setMessage("Congratulation you earned FREE reward at " + prg.com_name + " your coupon number is  " + prg.coupon_no + "\nShow staff to redeem now?")
+		.setMessage("Congratulation you earned FREE reward at " + prg.com_name + " your coupon number is  " + URLDecoder.decode(prg.coupon_no) + "\nShow staff to redeem now?")
 		.setCancelable(false)
 		.setPositiveButton("Verified",new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,int id) {
@@ -1008,12 +1140,63 @@ public class MyProgramsActivity extends FragmentActivity   {
  		    progressDialog.dismiss();
  		    FillMyProgramsListView();
 			BusinessLayer businessObject = new BusinessLayer();
-			if(prg.type.equals("3")==false)
+			
+			
+			if(prg.type.equals("1")==true || prg.type.equals("2")==true)
 				ShowMessage(businessObject.GetProgramBalance(prg),prg.pt_target);
-			else
+			else if(prg.type.equals("3")==true)
 				ShowMessage(prg.pt_balance,prg.pt_target);
+			else if(prg.type.equals("4")==true)
+			{
+				String strLevels = businessObject.GetProgramAccumulationLevels(prg);
+//				Toast.makeText(MyProgramsActivity.this,strLevels, 500).show();
+				String levels[] = strLevels.split(",");
+				boolean levelReached = false;
+				for(int levelCtr = 0;levelCtr<levels.length;levelCtr++)
+				{
+					if(prg.pt_balance.equals(levels[levelCtr]))
+					{
+						levelReached = true;
+						if(Helper.IsNetworkAvailable())
+						{
+		 		    		AsyncGetCouponNumber taskGetCoupon = new AsyncGetCouponNumber();
+		 		    		try {
+								prg.coupon_no = taskGetCoupon.execute(prg).get();
+								
+								ShowRedeemMessage(prg);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (ExecutionException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						else
+						{
+							// Show message that internet is required to get Coupon number.
+							//BusinessLayer businessObject1 = new BusinessLayer();
+							businessObject.UpdateProgramActState(prg);
+							ShowInternetErrorMessage();
+						}
+						break;
+					}
+				}
+				if(levelReached==false)
+				{
+						fbFeedMessage=  "I've just collected a reward point at " + prg.com_name + "," + prg.com_web2 + " using www.LoyalAZ.com";
+		 	    		if(prg.fbstatus.equals(""))
+		 	    			fbFeedCaption = "";
+		 	    		else
+		 	    			fbFeedCaption = prg.fbstatus;
+		 	    		
+						ApplicationLoyalAZ.fbMessage = "I've just collected a reward point at " + prg.com_name + "," + prg.com_web2 + " using LoyalAZ.com";
+						ShowMessage(prg.pt_balance,prg.pt_target);
+				}
+			}
  		}
 	}
+	
 	
 	private class AsyncGetCouponNumber extends AsyncTask<Program,Void,String>
 	{

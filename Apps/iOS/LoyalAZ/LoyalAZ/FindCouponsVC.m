@@ -64,6 +64,9 @@
     locationManager.delegate = self;
     locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
     locationManager.desiredAccuracy = kCLLocationAccuracyBest; // 100 m
+    if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [locationManager requestWhenInUseAuthorization];
+    }
     [locationManager startUpdatingLocation];
     [self ShowActivityView];
 }
@@ -633,12 +636,10 @@
 
 #pragma mark Location Functions
 
-- (void)locationManager:(CLLocationManager *)manager
-    didUpdateToLocation:(CLLocation *)newLocation
-           fromLocation:(CLLocation *)oldLocation
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     
-    
+    CLLocation *newLocation = [locations lastObject];
     CLLocationCoordinate2D coord;
     coord = newLocation.coordinate;
     
@@ -650,7 +651,7 @@
     
     latValue = [[NSString alloc]initWithFormat:@"%f", coord.latitude];
     lngValue = [[NSString alloc]initWithFormat:@"%f", coord.longitude];
-
+    
     MKCoordinateRegion region = { {0.0, 0.0 }, { 0.0, 0.0 } };
     region.center = coord;
     region.span.longitudeDelta = 0.05f;
@@ -665,11 +666,12 @@
     
     
     
-//    [businessObject FindCoupons:@"30.693361" lngValue:@"76.698769" userId:appObject.loyalaz.user.uid];
+    //    [businessObject FindCoupons:@"30.693361" lngValue:@"76.698769" userId:appObject.loyalaz.user.uid];
     [businessObject FindCoupons:latValue lngValue:lngValue userId:appObject.loyalaz.user.uid];
     [latValue release];
     [lngValue release];
 }
+
 
 
 

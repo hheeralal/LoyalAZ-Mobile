@@ -13,16 +13,16 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="Map" key="selection"/>
+		<item value="strLevels" key="selection"/>
 		<list key="findhistory">
-			<item value="map"/>
-			<item value="SupportMapFragment"/>
-			<item value="map.clear"/>
-			<item value="showMap"/>
-			<item value="spt"/>
-			<item value="parse"/>
-			<item value="Parse"/>
-			<item value="successfully"/>
+			<item value="strLevels"/>
+			<item value="Toast"/>
+			<item value="SyncDB"/>
+			<item value="AsyncAddNewProgram"/>
+			<item value="AsyncSyncDB"/>
+			<item value="Increment"/>
+			<item value="Verified"/>
+			<item value="UpdateProgramRedeemed"/>
 		</list>
 		<list key="replacehistory">
 		</list>

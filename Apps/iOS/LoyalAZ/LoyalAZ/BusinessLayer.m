@@ -307,7 +307,7 @@
         {
                 if([prg.pic_logo hasPrefix:@"http://"])
                 {
-                    //NSLog(@"Image to be updated.");
+                    NSLog(@"Image to be updated after recovery.");
                     [self DeleteImage:prg.pic_back]; //delete existing images
                     [self DeleteImage:prg.pic_front]; //delete existing images
                     [self DeleteImage:prg.pic_logo]; //delete existing images
@@ -335,6 +335,55 @@
                 //NSLog(@"XMLDB updated.");
 
         }
+    }
+}
+
+-(void)RecoverProgramImages
+{
+    Application *appObject = [Application applicationManager];
+    for(Program *prg in appObject.loyalaz.programs)
+    {
+            NSLog(@"Image to be updated after recovery.");
+            [self DeleteImage:prg.pic_back]; //delete existing images
+            [self DeleteImage:prg.pic_front]; //delete existing images
+            [self DeleteImage:prg.pic_logo]; //delete existing images
+            
+            prg.pic_logo = [self DownloadImage:prg.pic_logo];
+            prg.pic_front = [self DownloadImage:prg.pic_front];
+            prg.pic_back = [self DownloadImage:prg.pic_back];
+                //NSLog(@"Images updated.");
+            if([prg.d isEqualToString:@"1"])
+            {
+                prg.d=@"";
+            }
+            
+            if([prg.u isEqualToString:@"1"])
+            {
+                prg.u=@"";
+            }
+
+            [Helper SaveObjectToDB:appObject.loyalaz]; //save the updated object back to db.
+            //NSLog(@"XMLDB updated.");
+    }
+}
+
+-(void)RecoverCouponImages
+{
+    Application *appObject = [Application applicationManager];
+    for(Coupon *cpn in appObject.loyalaz.coupons)
+    {
+        [self DeleteImage:cpn.pic_back]; //delete existing images
+        [self DeleteImage:cpn.pic_front]; //delete existing images
+        [self DeleteImage:cpn.pic_logo]; //delete existing images
+        
+        cpn.pic_logo = [self DownloadImage:cpn.pic_logo];
+        cpn.pic_front = [self DownloadImage:cpn.pic_front];
+        cpn.pic_back = [self DownloadImage:cpn.pic_back];
+        cpn.pic_qrcode = [self DownloadImage:cpn.pic_qrcode];
+        NSLog(@"Coupon Images updated.");
+        
+        [Helper SaveObjectToDB:appObject.loyalaz]; //save the updated object back to db.
+        //NSLog(@"XMLDB updated.");
     }
 }
 
@@ -556,6 +605,8 @@
 //    if([self IsProgramExists:programObject.pid]) //check if program already exists than update its balance
     if([self IsProgramExistsWithLocation:programObject.pid withLocation:programObject.com_id])
     {
+        
+        NSLog(@"SPT=%@",programObject.spt);
         for(int i=0;i<appObject.loyalaz.programs.count;i++)
         {
             prg = [appObject.loyalaz.programs objectAtIndex:i];
@@ -707,6 +758,192 @@
         return_balance=@"-1";
     
     return return_balance;
+}
+
+-(NSString *)UpdateAccumulationProgram:(Program *)programObject
+{
+    
+    //NSLog(@"PID==%@",programObject.pid);
+    
+    Program *prg;
+    Application *appObject = [Application applicationManager];
+    int current_balance;
+    int target_points;
+    int current_loc_balance;
+    BOOL flagAct = NO;
+    NSString *return_balance=[[NSString alloc]init];
+    
+    //    if([self IsProgramExists:programObject.pid]) //check if program already exists than update its balance
+    if([self IsProgramExistsWithLocation:programObject.pid withLocation:programObject.com_id])
+    {
+        for(int i=0;i<appObject.loyalaz.programs.count;i++)
+        {
+            prg = [appObject.loyalaz.programs objectAtIndex:i];
+            if([programObject.pid isEqualToString:prg.pid] && [programObject.com_id isEqualToString:prg.com_id])
+            {
+                if([prg.act isEqualToString:@"1"])
+                {
+                    NSLog(@"ACT FOUNDDDDDDDDDDDD");
+                    flagAct = YES;
+                    return_balance = @"-1";
+                    break;
+                }
+                else
+                {
+                    current_balance =[prg.pt_balance intValue];
+                    target_points = [prg.pt_target intValue];
+                    current_loc_balance = [prg.pt_loc_balance intValue];
+                    if(current_balance<target_points)
+                    {
+                        
+                        if([programObject.spt isEqualToString:@""]) // check if spt node exists or not.
+                        {
+                            current_balance++;
+                            current_loc_balance++;
+                        }
+                        else
+                        {
+                            current_balance = current_balance + [programObject.spt intValue];
+                            current_loc_balance= current_loc_balance + [programObject.spt intValue];
+                        }
+                        
+                        prg.pt_balance = return_balance;
+                        prg.pt_loc_balance = [[NSString alloc]initWithFormat:@"%d",current_loc_balance];
+                        NSDate *current = [NSDate date];
+                        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                        [formatter setDateFormat:@"dd-MM-yyyy hh:mm:ss a"];
+                        NSString *stringDTStamp = [formatter stringFromDate:current];
+                        prg.s_dt = stringDTStamp;
+                        
+                        [Helper SaveObjectToDB:appObject.loyalaz]; //save the updated object back to db.
+                    }
+                    break;
+                }
+            }
+        }
+        
+        current_balance = 0;
+        for(int i=0;i<appObject.loyalaz.programs.count;i++)
+        {
+            prg = [appObject.loyalaz.programs objectAtIndex:i];
+            if([programObject.pid isEqualToString:prg.pid])
+            {
+                current_balance = current_balance + [prg.pt_loc_balance intValue];
+            }
+        }
+        
+        for(int i=0;i<appObject.loyalaz.programs.count;i++)
+        {
+            prg = [appObject.loyalaz.programs objectAtIndex:i];
+            if([programObject.pid isEqualToString:prg.pid])
+            {
+                prg.pt_balance = [[NSString alloc]initWithFormat:@"%d",current_balance];
+            }
+        }
+        return_balance = [[NSString alloc]initWithFormat:@"%d",current_balance];
+        [Helper SaveObjectToDB:appObject.loyalaz]; //save the updated object back to db.
+    }
+    else // if program doesn't exist than add new program in the array and save it.
+    {
+        if(appObject.loyalaz.programs.count==0)
+            appObject.loyalaz.programs = [[NSMutableArray alloc]init];
+        
+        programObject.u=@"";
+        
+        if(addFromFind==YES)
+        {
+            programObject.pt_balance=@"0";
+            programObject.pt_loc_balance = @"0";
+        }
+        else
+        {
+            
+            if([programObject.spt isEqualToString:@""])
+            {
+                programObject.pt_balance=@"1";
+                programObject.pt_loc_balance = @"1";
+            }
+            else
+            {
+                programObject.pt_balance=programObject.spt;
+                programObject.pt_loc_balance = programObject.spt;
+            }
+        }
+        
+        
+        addFromFind=NO;
+        
+        [appObject.loyalaz.programs addObject:programObject];
+        current_balance =[programObject.pt_balance intValue];
+        return_balance = [[NSString alloc]initWithFormat:@"%d",current_balance];
+        
+        if([Helper IsInternetAvailable]==YES)
+        {
+            programObject.pic_logo = [self DownloadImage:programObject.pic_logo];
+            programObject.pic_front = [self DownloadImage:programObject.pic_front];
+            programObject.pic_back = [self DownloadImage:programObject.pic_back];
+            programObject.d=@"0"; //Status that images are downloaded.
+        }
+        else
+        {
+            programObject.d=@"1"; //status that images are not downloaded.
+        }
+        //NSLog(@"Saved Program=%@",programObject.pid);
+        [Helper SaveObjectToDB:appObject.loyalaz];
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        current_balance = 0;
+        for(int i=0;i<appObject.loyalaz.programs.count;i++)
+        {
+            prg = [appObject.loyalaz.programs objectAtIndex:i];
+            if([programObject.pid isEqualToString:prg.pid])
+            {
+                current_balance = current_balance + [prg.pt_loc_balance intValue];
+            }
+        }
+        
+        for(int i=0;i<appObject.loyalaz.programs.count;i++)
+        {
+            prg = [appObject.loyalaz.programs objectAtIndex:i];
+            if([programObject.pid isEqualToString:prg.pid])
+            {
+                prg.pt_balance = [[NSString alloc]initWithFormat:@"%d",current_balance];
+                if(flagAct==YES)
+                    prg.act=@"1";
+            }
+        }
+        
+        return_balance = [[NSString alloc]initWithFormat:@"%d",current_balance];
+        NSLog(@"RET=%@",return_balance);
+        [Helper SaveObjectToDB:appObject.loyalaz];
+        [self SyncDB];
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+    }
+    
+    if(flagAct==YES)
+        return_balance=@"-1";
+    
+    return return_balance;
+}
+
+-(NSString *)GetProgramAccumulationLevels:(Program *)program
+{
+    Application *appObject = [Application applicationManager];
+    NSString *levels;
+    Program *prg;
+    for(int i=0;i<appObject.loyalaz.programs.count;i++)
+    {
+        prg = [appObject.loyalaz.programs objectAtIndex:i];
+        NSLog(@"LEVELS=%@",prg.accum_points);
+        if([program.pid isEqualToString:prg.pid])
+        {
+            levels = prg.accum_points;
+            NSLog(@"LEVELS=%@",levels);
+            break;
+        }
+    }
+
+    return levels;
 }
 
 
@@ -984,11 +1221,24 @@
             
             //NSLog(@"Current Balance=%@",prg.pt_balance);
             //NSLog(@"Current Coupon=%@",prg.coupon_no);                
-            
-            prg.pt_balance = @"0";
-            prg.coupon_no=@"";
-            prg.act=@"";
-            prg.pt_loc_balance=@"0";
+            if([prg.type isEqualToString:@"4"])
+            {
+                if([prg.pt_balance isEqualToString:prg.pt_target])
+                {
+                    prg.pt_balance = @"0";
+                    prg.pt_loc_balance=@"0";
+                }
+                prg.coupon_no=@"";
+                prg.act=@"";
+            }
+            else
+            {
+                prg.pt_balance = @"0";
+                prg.coupon_no=@"";
+                prg.act=@"";
+                prg.pt_loc_balance=@"0";
+
+            }
             [Helper SaveObjectToDB:appObject.loyalaz]; //save the updated object back to db.
             //break;
         }
@@ -1306,7 +1556,7 @@
 // This delegate method will be fired when Communication manager sends the response back here.
 - (void)communicationManagerDidFinish:(NSString *)ResponseXML
 {
-    //NSLog(@"GOT RESPONSE=%@",ResponseXML);
+    NSLog(@"GOT RESPONSE=%@",ResponseXML);
     if(rType==enGetBaseURL)
     {
         NSString *returnedXML = [XMLParser GetNodeValue:ResponseXML nodePath:@"//return"];
@@ -1393,11 +1643,20 @@
         NSLog(@"Valid email id=%@",validateEmailResponse2);
         if([validateEmailResponse isEqualToString:@"0"] && [validateEmailResponse2 isEqualToString:@"0"]) // if email doesn't exist
         {
-            [self.delegate BusinessLayerDidFinish:NO];
+            [self.delegate BusinessLayerDidFinish:YES];
+        }
+        else if([validateEmailResponse isEqualToString:@"1"] && [validateEmailResponse2 isEqualToString:@"0"]) // if email doesn't exist
+        {
+//            [self.delegate BusinessLayerDidFinish:NO];
+            [self.delegate BusinessLayerErrorOccurred:nil];
+        }
+        else if([validateEmailResponse isEqualToString:@"0"] && [validateEmailResponse2 isEqualToString:@"1"]) // if email doesn't exist
+        {
+            [self.delegate BusinessLayerDidFinish:YES];
         }
         else
         {
-            [self.delegate BusinessLayerDidFinish:YES];
+            [self.delegate BusinessLayerDidFinish:NO];
         }
     }
     else  if(rType==enSendMail)
@@ -1427,12 +1686,14 @@
         {
             NSData *data = [NSStringUtil base64DataFromString:tokenResponse];
             NSString *plainXML = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-            //NSLog(@"RECOVERED=%@",plainXML);
+            NSLog(@"RECOVERED=%@",plainXML);
             Application *appObject = [Application applicationManager];
             appObject.loyalaz = [XMLParser XmlToObject:plainXML];
             [Helper SaveObjectToDB:appObject.loyalaz];
             rType=enValidateSecurityToken;
-            [self UpdateProgramImages];
+//            [self UpdateProgramImages];
+            [self RecoverProgramImages];
+            [self RecoverCouponImages];
             [self.delegate BusinessLayerDidFinish:YES];
         }
     }

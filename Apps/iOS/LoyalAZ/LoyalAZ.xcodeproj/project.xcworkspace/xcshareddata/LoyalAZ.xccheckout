@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>4AA83A61-CA57-409D-A461-9C595B9994A4</string>
+	<string>779EA80C-F9D6-4879-B763-943D48BC1D26</string>
 	<key>IDESourceControlProjectName</key>
 	<string>LoyalAZ</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>06EAF238-F58E-4DD3-A430-F9C83AA1F24C</key>
-		<string>https://github.com/dmitristern/LoyalAZ-Mobile.git</string>
+		<key>A6B485DA349C970E9E1978233081D5E4DD1D6424</key>
+		<string>https://github.com/hheeralal/LoyalAZ-Mobile.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Apps/iOS/LoyalAZ/LoyalAZ.xcodeproj/project.xcworkspace</string>
+	<string>Apps/iOS/LoyalAZ/LoyalAZ.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>06EAF238-F58E-4DD3-A430-F9C83AA1F24C</key>
+		<key>A6B485DA349C970E9E1978233081D5E4DD1D6424</key>
 		<string>../../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/dmitristern/LoyalAZ-Mobile.git</string>
+	<string>https://github.com/hheeralal/LoyalAZ-Mobile.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>06EAF238-F58E-4DD3-A430-F9C83AA1F24C</string>
+	<string>A6B485DA349C970E9E1978233081D5E4DD1D6424</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>06EAF238-F58E-4DD3-A430-F9C83AA1F24C</string>
+			<string>A6B485DA349C970E9E1978233081D5E4DD1D6424</string>
 			<key>IDESourceControlWCCName</key>
 			<string>LoyalAZ-Mobile</string>
 		</dict>

@@ -13,9 +13,10 @@
 #import "Countries.h"
 #import "Country.h"
 #import "CMPopTipView.h"
+#import "SelectCountryVC.h"
 
 
-@interface RegisterUserStep2VC : CustomVC <UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate,BusinessLayerDelegate,CMPopTipViewDelegate>
+@interface RegisterUserStep2VC : CustomVC <SelectCountryDelegate, UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate,BusinessLayerDelegate,CMPopTipViewDelegate>
 {
     UITableView *tblRegister;
     UITextField *phoneNumber;

@@ -16,6 +16,7 @@
 @synthesize pt_loc_balance,fbstatus;
 @synthesize active;
 @synthesize pins,spt;
+@synthesize accum_points;
 //@synthesize lat,lng;
 
 -(void)dealloc

@@ -459,7 +459,6 @@
 //    [cell.labelProgramDetails sizeToFit];
     
     CGRect nameRect = cell.labelProgramName.bounds;
-    NSLog(@"Old Height=%f",nameRect.size.height);
     
     CGSize constraint = CGSizeMake(213, 20000.0f);
     CGSize size = [[prg.name stringByRemovingPercentEncoding] sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
@@ -471,8 +470,6 @@
     
     
     nameRect = cell.labelProgramName.frame;
-    NSLog(@"New Height=%f",nameRect.size.height);
-    NSLog(@"HDFHDHDHDFH");
     
     UIFont *fontDescription = [UIFont fontWithName:@"open-sans.light" size:12.0f];
     [cell.labelProgramDetails setFont:[UIFont systemFontOfSize:14]];
@@ -1089,7 +1086,7 @@
     
     if(balance_points<target_points)
     {
-        NSString *newbalance = [businessObject UpdateProgramBalance:vProgram]; //get the new balance as string
+        NSString *newbalance = [businessObject UpdateAccumulationProgram:vProgram]; //get the new balance as string
         vProgram.pt_balance = newbalance;
         
         balance_points = [newbalance intValue];
@@ -1104,63 +1101,77 @@
             [av release];
             [message release];
         }
-        else if(balance_points<target_points)
+        else
         {
-            NSString *message = [[NSString alloc]initWithFormat:@"Congratulations! You now have %@ rewards. Your reward target is %@",newbalance,vProgram.pt_target];
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-            av.tag=3;
-            [av show];
-            [av release];
+            // if(balance_points == target_points )
             
-            [self SetupArrays];
-            [tableViewPrograms reloadData];
-            [tableViewPrograms reloadSectionIndexTitles];
-            
-            self.postParams =
-            [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-             @"http://www.loyalaz.com/newapp/", @"link",
-             nil];
-            
-            NSString *FBMessage = nil;
-            
-            FBMessage = [[NSString alloc]initWithFormat:@"I've just collected a reward point at %@, %@ using www.LoyalAZ.com",[vProgram.com_name stringByRemovingPercentEncoding],vProgram.com_web2];
-            [self.postParams setObject:FBMessage forKey:@"message"];
-            
-            if([vProgram.fbstatus isEqualToString:@""]==NO)
+            NSArray *arrayLevels = [[businessObject GetProgramAccumulationLevels:vProgram] componentsSeparatedByString:@","];
+            BOOL couponFlag = NO;
+            for(int i=0;i<arrayLevels.count;i++)
             {
-                FBMessage = [vProgram.fbstatus stringByRemovingPercentEncoding];
-                [self.postParams setObject:FBMessage forKey:@"caption"];
+                if([vProgram.pt_balance isEqualToString:arrayLevels[i]])
+                {
+                    couponFlag = YES;
+                    couponProgram = vProgram;
+                    if([Helper IsInternetAvailable]==YES)
+                    {
+                        getCouponCode = YES;
+                        tempCompanyName = vProgram.com_name;
+                        businessObject.coupondelegate = self;
+                        [businessObject GetCouponNumber:appObject.loyalaz.user.uid withProgram:vProgram];
+                        
+                        self.postParams =
+                        [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                         @"http://www.loyalaz.com/newapp/", @"link",
+                         nil];
+                        
+                        NSString *FBMessage = nil;
+                        
+                        FBMessage = [[NSString alloc]initWithFormat:@"I've just collected a reward point at %@, %@ using www.LoyalAZ.com",[vProgram.com_name stringByRemovingPercentEncoding],vProgram.com_web2];
+                        [self.postParams setObject:FBMessage forKey:@"message"];
+                        
+                        if([vProgram.fbstatus isEqualToString:@""]==NO)
+                        {
+                            FBMessage = [vProgram.fbstatus stringByRemovingPercentEncoding];
+                            [self.postParams setObject:FBMessage forKey:@"caption"];
+                        }
+                        else
+                        {
+                            [self.postParams setObject:@"LoyalAZ Loyalty Reward System - An ultimate loyalty program that saves money, gives best rewards in the shortest period of time to the customer AND helps retailers and local businesses to build a loyal client base - cost-effectively and with minimum fuss." forKey:@"caption"];
+                        }
+                        
+                        if([appObject.loyalaz.enableFBPost isEqualToString:@"1"])
+                        {
+                            [self MakeFBCall];
+                        }
+                        
+                    }
+                    else
+                    {
+                        NSString *message = [[NSString alloc]initWithFormat:@"Internet connection is required to receive the Coupon Number. Please click on this Program when internet connection is available."];
+                        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                        [av show];
+                        [av release];
+                        [message release];
+                        couponProgram.coupon_no = @"";
+                        BusinessLayer *businessObject = [[BusinessLayer alloc]init];
+                        [businessObject UpdateProgramActState:couponProgram];
+                    }
+                    break;
+                }
             }
-            else
+
+            if(couponFlag==NO)
             {
-                [self.postParams setObject:@"LoyalAZ Loyalty Reward System - An ultimate loyalty program that saves money, gives best rewards in the shortest period of time to the customer AND helps retailers and local businesses to build a loyal client base - cost-effectively and with minimum fuss." forKey:@"caption"];
-            }
-            
-            
-            
-            //            if([appObject.loyalaz.enableFBPost isEqualToString:@""])
-            //            {
-            //                NSLog(@"No value set for enable FB posts");
-            //                NSString *FBPrompt = [[NSString alloc]initWithFormat:@"Also check-in and post about it to your Facebook Wall?"];
-            //                UIAlertView *avFB = [[UIAlertView alloc]initWithTitle:@"" message:FBPrompt delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
-            //                avFB.tag=2;
-            //                [avFB show];
-            //            }
-            if([appObject.loyalaz.enableFBPost isEqualToString:@"1"])
-            {
-                [self MakeFBCall];
-            }
-            
-        }
-        else if(balance_points == target_points )
-        {
-            couponProgram = vProgram;
-            if([Helper IsInternetAvailable]==YES)
-            {
-                getCouponCode = YES;
-                tempCompanyName = vProgram.com_name;
-                businessObject.coupondelegate = self;
-                [businessObject GetCouponNumber:appObject.loyalaz.user.uid withProgram:vProgram];
+                NSString *message = [[NSString alloc]initWithFormat:@"Congratulations! You now have %@ rewards. Your reward target is %@",newbalance,vProgram.pt_target];
+                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                av.tag=3;
+                [av show];
+                [av release];
+                
+                [self SetupArrays];
+                [tableViewPrograms reloadData];
+                [tableViewPrograms reloadSectionIndexTitles];
                 
                 self.postParams =
                 [[NSMutableDictionary alloc] initWithObjectsAndKeys:
@@ -1186,18 +1197,6 @@
                 {
                     [self MakeFBCall];
                 }
-                
-            }
-            else
-            {
-                NSString *message = [[NSString alloc]initWithFormat:@"Internet connection is required to receive the Coupon Number. Please click on this Program when internet connection is available."];
-                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                [av show];
-                [av release];
-                [message release];
-                couponProgram.coupon_no = @"";
-                BusinessLayer *businessObject = [[BusinessLayer alloc]init];
-                [businessObject UpdateProgramActState:couponProgram];
             }
         }
     }
@@ -1275,7 +1274,7 @@
         }
     }
     
-    if([stringValues count]==23) // check if value for spt node exists.
+    if([stringValues count]>=23) // check if value for spt node exists.
     {
         vProgram.spt = [stringValues objectAtIndex:22];
     }
@@ -1704,7 +1703,7 @@
         if(getCouponCode==YES)
         {
             getCouponCode = NO;
-            NSMutableString *message = [[NSMutableString alloc]initWithFormat:@"Congratulation you earned FREE reward at %@ your coupon number is  %@",tempCompanyName,couponCode];
+            NSMutableString *message = [[NSMutableString alloc]initWithFormat:@"Congratulation you earned FREE reward at %@ your coupon number is  %@",tempCompanyName,[couponCode stringByRemovingPercentEncoding]];
             [message appendString:@"\nShow staff to redeem now?"];
             couponProgram.coupon_no = couponCode;
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"" message:message delegate:self cancelButtonTitle:@"Verified" otherButtonTitles:@"Not Now", nil];

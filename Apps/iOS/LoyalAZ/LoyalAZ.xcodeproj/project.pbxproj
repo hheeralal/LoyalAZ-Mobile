@@ -45,6 +45,8 @@
 		AF33FA1816103E1700C13B10 /* libZXingWidget.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF33FA1316103D8100C13B10 /* libZXingWidget.a */; };
 		AF36126F16482755008B81B7 /* WaitingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AF36126D16482755008B81B7 /* WaitingVC.m */; };
 		AF36127016482755008B81B7 /* WaitingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF36126E16482755008B81B7 /* WaitingVC.xib */; };
+		AF37952619D3180C000E91ED /* SelectCountryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AF37952419D3180C000E91ED /* SelectCountryVC.m */; };
+		AF37952719D3180C000E91ED /* SelectCountryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF37952519D3180C000E91ED /* SelectCountryVC.xib */; };
 		AF4157BA18182F1600719DF7 /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = AF4157B818182F1600719DF7 /* Appirater.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		AF496C7717C1EC0300B07205 /* finish.png in Resources */ = {isa = PBXBuildFile; fileRef = AF496C7517C1EC0300B07205 /* finish.png */; };
 		AF4A158F159EFED400B7EE7C /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = AF4A158E159EFED400B7EE7C /* Helper.m */; };
@@ -287,6 +289,9 @@
 		AF36126C16482755008B81B7 /* WaitingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitingVC.h; sourceTree = "<group>"; };
 		AF36126D16482755008B81B7 /* WaitingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitingVC.m; sourceTree = "<group>"; };
 		AF36126E16482755008B81B7 /* WaitingVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WaitingVC.xib; sourceTree = "<group>"; };
+		AF37952319D3180C000E91ED /* SelectCountryVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectCountryVC.h; sourceTree = "<group>"; };
+		AF37952419D3180C000E91ED /* SelectCountryVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectCountryVC.m; sourceTree = "<group>"; };
+		AF37952519D3180C000E91ED /* SelectCountryVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectCountryVC.xib; sourceTree = "<group>"; };
 		AF4157B718182F1600719DF7 /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
 		AF4157B818182F1600719DF7 /* Appirater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appirater.m; sourceTree = "<group>"; };
 		AF4157B918182F1600719DF7 /* AppiraterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppiraterDelegate.h; sourceTree = "<group>"; };
@@ -914,6 +919,9 @@
 				AF864EF318E2999C0086EAFF /* ProgramCell.m */,
 				AFEF50A618FC45DD003264E7 /* PasscodeVC.m */,
 				AFA34578196B1734005CC031 /* CouponCell.m */,
+				AF37952319D3180C000E91ED /* SelectCountryVC.h */,
+				AF37952419D3180C000E91ED /* SelectCountryVC.m */,
+				AF37952519D3180C000E91ED /* SelectCountryVC.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1160,6 +1168,7 @@
 				AF00B13016F6CC19003DF5FE /* CustomCell.xib in Resources */,
 				AFF87F43192BA732009EFB86 /* page2-asset1.png in Resources */,
 				AFA74E81171727BC00DE36B0 /* expiry_based.png in Resources */,
+				AF37952719D3180C000E91ED /* SelectCountryVC.xib in Resources */,
 				AFA74E82171727BC00DE36B0 /* quantity_based.png in Resources */,
 				AFF87F47192BAC10009EFB86 /* page5-asset1.png in Resources */,
 				AFEF50A918FC45DD003264E7 /* PasscodeVC.xib in Resources */,
@@ -1239,6 +1248,7 @@
 				AF1BDB6715B14D91007597F5 /* CommunicationManager.m in Sources */,
 				AF84338A1803E5D700561687 /* SBJsonStreamWriterState.m in Sources */,
 				AF15B18315B9842B006DFFAE /* BusinessLayer.m in Sources */,
+				AF37952619D3180C000E91ED /* SelectCountryVC.m in Sources */,
 				AFBD371215BAC2CD004B684D /* RegisterUserStep2VC.m in Sources */,
 				AFD8C62817FE968D00285228 /* NSString+HTML.m in Sources */,
 				AFA75DB215BC521300BB8955 /* CompanyDetailsVC.m in Sources */,

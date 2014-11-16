@@ -19,7 +19,7 @@
 
 @interface FindProgramsVC : CustomVC <BusinessLayerDelegate,CLLocationManagerDelegate,MKMapViewDelegate>
 {
-    CLLocationManager *locationManager;
+//    CLLocationManager *locationManager;
     NSMutableArray *listOfItems;
     NSMutableArray *copyListOfItems;
     NSMutableArray *cellHeight;
@@ -41,6 +41,7 @@
     NSMutableArray *annArray;
 
 }
+@property (nonatomic , strong) CLLocationManager *locationManager;
 
 -(IBAction) viewTypeChanged:(id)sender;
 - (void) searchTableView;

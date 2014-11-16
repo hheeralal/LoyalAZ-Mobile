@@ -41,7 +41,7 @@
     [GAI sharedInstance].debug = YES;
     // Create tracker instance.
     id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-8952881-16"];
-    NSLog(@"%@",tracker);
+//    NSLog(@"%@",tracker);
 
     
     Application *appObject = [Application applicationManager];

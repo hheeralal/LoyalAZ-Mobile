@@ -138,4 +138,10 @@ enum RequestType
 
 -(NSString *)GetProgramPins:(Program *)programObject;
 
+-(NSString *)UpdateAccumulationProgram:(Program *)programObject;
+
+-(NSString *)GetProgramAccumulationLevels:(Program *)program;
+
+-(void)RecoverProgramImages;
+
 @end
