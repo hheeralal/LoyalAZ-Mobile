@@ -39,7 +39,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.4</string>
+	<string>2.0.5</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -52,9 +52,11 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.0.4</string>
+	<string>2.0.5</string>
 	<key>FacebookAppID</key>
 	<string>487940984590779</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Location Manager is required for Find Features</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -76,7 +78,5 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
 </dict>
 </plist>

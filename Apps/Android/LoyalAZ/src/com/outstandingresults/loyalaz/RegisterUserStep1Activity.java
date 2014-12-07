@@ -140,7 +140,7 @@ public class RegisterUserStep1Activity extends Activity {
 			
         	@Override
 			public void onClick(View v) {
-        		Toast toast=Toast.makeText(RegisterUserStep1Activity.this, "You can always recover ALL your Reward Cards or Coupons and its data, even if you lost your phone or accidentally deleted this app Ð the LoyalAZ will email to you ÔrestoreÕ info and you can continue using all your loyalty cards and can redeem all accumulated rewards. Your Privacy is Safe with LoyalAZ.comÕ", Toast.LENGTH_LONG);
+        		Toast toast=Toast.makeText(RegisterUserStep1Activity.this, "You can always recover ALL your Reward Cards or Coupons and its data, even if you lost your phone or accidentally deleted this app ï¿½ the LoyalAZ will email to you ï¿½restoreï¿½ info and you can continue using all your loyalty cards and can redeem all accumulated rewards. Your Privacy is Safe with LoyalAZ.comï¿½", Toast.LENGTH_LONG);
         		int yOffset = getAbsolutePositionY(textEmailId) - 10;
         		toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, yOffset);
         		toast.show();
@@ -224,9 +224,9 @@ public class RegisterUserStep1Activity extends Activity {
      
     			// set dialog message
     			alertDialogBuilder
-    				.setMessage("This email is already registered in the database. Please use a different email.")
+    				.setMessage("The email already exists and currently inactive. Please contact system administrator to activate or try another email.")
     				.setCancelable(false)
-    				.setNegativeButton("No",new DialogInterface.OnClickListener() {
+    				.setNegativeButton("OK",new DialogInterface.OnClickListener() {
     					public void onClick(DialogInterface dialog,int id) {
     						dialog.cancel();
     					}

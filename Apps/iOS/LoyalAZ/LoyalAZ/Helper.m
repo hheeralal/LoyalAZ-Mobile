@@ -8,7 +8,6 @@
 @implementation Helper
 
 
-
 +(NSString *)GetStoragePath:(NSString *)fileName
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);

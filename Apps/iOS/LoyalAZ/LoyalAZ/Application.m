@@ -15,6 +15,7 @@
 @synthesize cachedCoupons;
 @synthesize adsURL;
 @synthesize advertObject;
+@synthesize deviceToken;
 
 static Application *applicationManager = nil;
 
@@ -44,6 +45,7 @@ static Application *applicationManager = nil;
         BaseURLSet = NO;
         cachedResults = NO;
         cachedCoupons = NO;
+        deviceToken = @"";
         advertObject = [[Advertisement alloc]init];
     }
     return self;

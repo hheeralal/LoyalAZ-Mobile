@@ -983,6 +983,17 @@ public class BusinessLayer {
 				ApplicationLoyalAZ.loyalaz.programs.set(i, tProgram);
 			}
 		}
+		
+		for(int i=0;i<ApplicationLoyalAZ.loyalaz.coupons.size();i++)
+		{
+			Coupon tCoupon = ApplicationLoyalAZ.loyalaz.coupons.get(i);
+			if(isRecoveryTask==true)
+			{
+				tCoupon = DownloadCouponImages(tCoupon);
+				
+				ApplicationLoyalAZ.loyalaz.coupons.set(i, tCoupon);
+			}
+		}
 	}
 	
 	private Program DownloadProgramImages(Program prg)
@@ -992,7 +1003,7 @@ public class BusinessLayer {
 		prg.pic_back = DownloadImageFromURL(prg.pic_back);
 		return prg;
 	}
-	
+		
 	public String GetProgramAccumulationLevels(Program prg)
 	{
 		String levels = "";

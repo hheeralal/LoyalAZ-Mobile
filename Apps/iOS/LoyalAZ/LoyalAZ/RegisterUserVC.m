@@ -497,6 +497,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             appObject.loyalaz.user.firstname=firstName.text;
             appObject.loyalaz.user.lastname=lastName.text;
             appObject.loyalaz.user.email=emailId.text;
+            appObject.loyalaz.user.dtoken = appObject.deviceToken;
             
             BusinessLayer *businessObject = [[BusinessLayer alloc]init];
             

@@ -9,9 +9,8 @@
 
 @interface Helper : NSObject
 {
-    
-}
 
+}
 
 +(NSString*)GetXMLHeader;
 

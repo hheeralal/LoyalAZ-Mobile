@@ -4,6 +4,7 @@ import java.util.concurrent.ExecutionException;
 
 import com.bugsense.trace.BugSenseHandler;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.outstandingresults.Helpers.ApplicationLoyalAZ;
 import com.outstandingresults.Helpers.BusinessLayer;
 
 import android.app.Activity;
@@ -53,6 +54,7 @@ public class RecoverDataActivity extends Activity {
         	@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+        		ApplicationLoyalAZ.baseURLSet=false;
         		AsyncRecover recoverObject = new AsyncRecover();
         		String token = editTextST.getText().toString();
 				recoverObject.execute(token);

@@ -19,6 +19,7 @@
     NSString *addresssuburb;
     NSString *addresscity;
     NSString *addresscountry;
+    NSString *dtoken;
     
 }
 
@@ -34,5 +35,6 @@
 @property (nonatomic,retain) NSString *addresssuburb;
 @property (nonatomic,retain) NSString *addresscity;
 @property (nonatomic,retain) NSString *addresscountry;
+@property (nonatomic,retain) NSString *dtoken;
 
 @end

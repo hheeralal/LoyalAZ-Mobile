@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item value="243" key="DIALOG_WIDTH"/>
-		<item value="120" key="DIALOG_Y_ORIGIN"/>
-		<item value="379" key="DIALOG_HEIGHT"/>
-		<item value="770" key="DIALOG_X_ORIGIN"/>
-		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
-	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item value="false" key="wrap"/>
 		<item value="false" key="isRegEx"/>
+		<item value="recover" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
+		<item value="false" key="wrap"/>
 		<item value="false" key="wholeword"/>
-		<item value="strLevels" key="selection"/>
 		<list key="findhistory">
-			<item value="strLevels"/>
-			<item value="Toast"/>
-			<item value="SyncDB"/>
-			<item value="AsyncAddNewProgram"/>
-			<item value="AsyncSyncDB"/>
-			<item value="Increment"/>
-			<item value="Verified"/>
-			<item value="UpdateProgramRedeemed"/>
+			<item value="recover"/>
+			<item value="ApplicationLoyalAZ.baseURLSet"/>
+			<item value="ValidateSecurityToken"/>
+			<item value="AsyncRegister"/>
+			<item value="Validate"/>
+			<item value="DownloadCouponImages"/>
+			<item value="DownloadCouponImage"/>
+			<item value="DownloadCoupon"/>
 		</list>
 		<list key="replacehistory">
 		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="245" key="DIALOG_WIDTH"/>
+		<item value="1|.Helvetica Neue DeskInterface|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
+		<item value="379" key="DIALOG_HEIGHT"/>
+		<item value="120" key="DIALOG_Y_ORIGIN"/>
+		<item value="770" key="DIALOG_X_ORIGIN"/>
 	</section>
 </section>

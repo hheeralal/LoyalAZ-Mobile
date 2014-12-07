@@ -132,6 +132,8 @@ public class Helper {
 		xt.alias("MProgram", MProgram.class);
 		xt.alias("MoreCoupons", MoreCoupons.class);
 		xt.alias("MCoupon", MCoupon.class);
+		xt.alias("Coupon", Coupon.class);
+		
 		
 		xt.omitField(LoyalAZ.class, "MorePrograms");
 		xt.omitField(LoyalAZ.class, "MoreCoupons");

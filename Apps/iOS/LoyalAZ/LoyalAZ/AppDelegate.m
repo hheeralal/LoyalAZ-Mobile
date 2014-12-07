@@ -43,7 +43,16 @@
     id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-8952881-16"];
 //    NSLog(@"%@",tracker);
 
-    
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        //        NSLog(@"iOS 8");
+        [[UIApplication sharedApplication]registerForRemoteNotifications];
+        
+    } else {
+        //        NSLog(@"iOS 7");
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    }
+
+
     Application *appObject = [Application applicationManager];
     appObject.loyalaz = [Helper GetObjectFromDB];
 
@@ -91,6 +100,27 @@
     
     return YES;
 }
+
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    // Get a hex string from the device token with no spaces or < >
+    NSString *deviceTokenStr = [[[[deviceToken description]
+                                  stringByReplacingOccurrencesOfString: @"<" withString: @""]
+                                 stringByReplacingOccurrencesOfString: @">" withString: @""]
+                                stringByReplacingOccurrencesOfString: @" " withString: @""];
+    
+    Application *appObject = [Application applicationManager];
+    appObject.deviceToken = deviceTokenStr;
+    
+    NSLog(@"Device Token: %@", deviceTokenStr);
+}
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+    NSLog(@"Failed to get token, error: %@", error);
+}
+
+
 
 -(void)communicationManagerDidFinish:(NSString *)ResponseXML
 {

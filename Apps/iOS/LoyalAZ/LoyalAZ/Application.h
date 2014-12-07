@@ -29,6 +29,7 @@
 @property (readwrite,assign) BOOL cachedResults;
 @property (readwrite,assign) BOOL cachedCoupons;
 @property (nonatomic,strong) Advertisement *advertObject;
+@property (nonatomic,strong) NSString *deviceToken;
 
 + (id)applicationManager;
 

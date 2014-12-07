@@ -32,6 +32,7 @@
     addresssuburb = nil;
     uid = nil;
     addresscountry = nil;
+    dtoken = nil;
     
     [super dealloc];
 }
@@ -51,6 +52,7 @@
         addresssuburb = @"";
         uid = @"";
         addresscountry = @"";
+        dtoken = @"";
     }
     return self;
 }
