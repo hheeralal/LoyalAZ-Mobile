@@ -30,6 +30,10 @@
 @property (readwrite,assign) BOOL cachedCoupons;
 @property (nonatomic,strong) Advertisement *advertObject;
 @property (nonatomic,strong) NSString *deviceToken;
+@property (nonatomic,assign) BOOL fromNotification;
+@property (nonatomic,assign) NSString *prgId;
+@property (nonatomic,assign) NSString *cpnId;
+@property (nonatomic,assign) BOOL isCoupon;
 
 + (id)applicationManager;
 

@@ -21,6 +21,7 @@ public class ApplicationLoyalAZ
 	   public static boolean cachePrograms;
 	   public static boolean cacheCoupons;
 	   public static Advertisement advertObject;
+	   public static String token;
 	   protected ApplicationLoyalAZ() 
 	   {
 	      // Exists only to defeat instantiation.
@@ -33,6 +34,7 @@ public class ApplicationLoyalAZ
 	    	  showTutorial = false;
 	    	  cachePrograms = false;
 	    	  cacheCoupons = false;
+	    	  token = "";
 //	    	  advertObject = new Advertisement();
 	         instance = new ApplicationLoyalAZ();
 	      }

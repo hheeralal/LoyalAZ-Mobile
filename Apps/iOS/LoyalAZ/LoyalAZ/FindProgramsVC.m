@@ -505,14 +505,26 @@
     [self HideActivityView];
     if(result==YES)
     {
+//        appObject.prgId = @"111";
+        NSLog(@"PRG_ID=%@",appObject.prgId);
         //NSLog(@"Find programs returned.");
         listOfItems = [[NSMutableArray alloc]init];
         annArray = [[NSMutableArray alloc]init];
         MProgram *tempProgram = nil;
+        MProgram *pushProgram = nil;
         for(int i=0;i<appObject.morePrograms.MPrograms.count;i++)
         {
             tempProgram = [appObject.morePrograms.MPrograms objectAtIndex:i];
             [listOfItems addObject:tempProgram];
+            
+            if(appObject.fromNotification==YES)
+            {
+                
+                if([tempProgram.id isEqualToString:appObject.prgId]) {
+                    
+                    pushProgram = tempProgram;
+                }
+            }
         }
         [self SetupMapAnnotations];
         
@@ -520,6 +532,14 @@
         searching = NO;
         letUserSelectRow = YES;
         [tableViewPrograms reloadData];
+        
+        if(pushProgram!=nil) {
+            MoreProgramDetailsVC *moreProgramDetailsVC = [[MoreProgramDetailsVC alloc]initWithNibNameAndProgram:@"MoreProgramDetailsVC" bundle:nil withProgram:pushProgram];
+            [self.navigationController pushViewController:moreProgramDetailsVC animated:YES];
+            [moreProgramDetailsVC release];
+
+        }
+        
         // Fetched results are found in appObject.morePrograms.
     }
 }

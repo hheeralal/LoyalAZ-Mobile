@@ -85,6 +85,8 @@
         [av release];
         [self dismissViewControllerAnimated:YES completion:nil];
         [self.delegate DataRecoveryVCDidFinish];
+        BusinessLayer *businessObject = [[BusinessLayer alloc]init];
+        [businessObject SyncDB];
     }
     else {
         UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Validation" message:@"Security Token entered is invalid.\nPlease try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];

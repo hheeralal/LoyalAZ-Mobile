@@ -1,24 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.xmlpull.v1.XmlPullParser"/>
-<fullyQualifiedTypeName name="javax.xml.xpath.XPathFactory"/>
-<fullyQualifiedTypeName name="javax.xml.xpath.XPath"/>
-<fullyQualifiedTypeName name="org.kxml2.kdom.Element"/>
-<fullyQualifiedTypeName name="org.xml.sax.InputSource"/>
-<fullyQualifiedTypeName name="java.io.InputStream"/>
-<fullyQualifiedTypeName name="javax.xml.parsers.DocumentBuilderFactory"/>
-<fullyQualifiedTypeName name="javax.xml.parsers.DocumentBuilder"/>
-<fullyQualifiedTypeName name="org.kxml2.kdom.Document"/>
-<fullyQualifiedTypeName name="org.w3c.dom.NodeList"/>
-<fullyQualifiedTypeName name="java.io.ByteArrayInputStream"/>
-<fullyQualifiedTypeName name="javax.xml.parsers.ParserConfigurationException"/>
-<fullyQualifiedTypeName name="org.xml.sax.SAXException"/>
-<fullyQualifiedTypeName name="com.outstandingresults.Helpers.Helper"/>
-<fullyQualifiedTypeName name="android.content.DialogInterface"/>
-<fullyQualifiedTypeName name="android.content.DialogInterface.OnClickListener"/>
-<fullyQualifiedTypeName name="android.app.Activity"/>
-<fullyQualifiedTypeName name="android.widget.EditText"/>
-<fullyQualifiedTypeName name="android.text.TextWatcher"/>
 <fullyQualifiedTypeName name="android.text.Editable"/>
 <fullyQualifiedTypeName name="com.outstandingresults.DataObjects.Program"/>
 <fullyQualifiedTypeName name="android.widget.ImageView"/>
@@ -39,7 +20,6 @@
 <fullyQualifiedTypeName name="com.outstandingresults.DataObjects.MCoupon"/>
 <fullyQualifiedTypeName name="android.view.animation.AlphaAnimation"/>
 <fullyQualifiedTypeName name="android.widget.LinearLayout"/>
-<fullyQualifiedTypeName name="android.view.View"/>
 <fullyQualifiedTypeName name="com.outstandingresults.loyalaz.MyCouponsActivity"/>
 <fullyQualifiedTypeName name="com.outstandingresults.Helpers.BusinessLayer"/>
 <fullyQualifiedTypeName name="android.graphics.Typeface"/>
@@ -49,7 +29,6 @@
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="org.ksoap2.HeaderProperty"/>
 <fullyQualifiedTypeName name="com.outstandingresults.loyalaz.MyProgramsActivity"/>
-<fullyQualifiedTypeName name="com.outstandingresults.Helpers.ApplicationLoyalAZ"/>
 <fullyQualifiedTypeName name="org.ksoap2.transport.HttpsTransportSE"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="org.apache.http.NameValuePair"/>
@@ -60,4 +39,25 @@
 <fullyQualifiedTypeName name="org.apache.http.HttpResponse"/>
 <fullyQualifiedTypeName name="org.apache.http.client.ClientProtocolException"/>
 <fullyQualifiedTypeName name="org.apache.http.impl.client.DefaultHttpClient"/>
+<fullyQualifiedTypeName name="com.google.android.gms.common.GooglePlayServicesUtil"/>
+<fullyQualifiedTypeName name="com.google.android.gms.common.ConnectionResult"/>
+<fullyQualifiedTypeName name="java.util.concurrent.atomic.AtomicInteger"/>
+<fullyQualifiedTypeName name="android.content.SharedPreferences"/>
+<fullyQualifiedTypeName name="android.support.v4.app.NotificationCompat"/>
+<fullyQualifiedTypeName name="android.os.Bundle"/>
+<fullyQualifiedTypeName name="com.google.android.gms.gcm.GoogleCloudMessaging"/>
+<fullyQualifiedTypeName name="android.content.Intent"/>
+<fullyQualifiedTypeName name="android.app.IntentService"/>
+<fullyQualifiedTypeName name="android.os.SystemClock"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="android.content.ComponentName"/>
+<fullyQualifiedTypeName name="android.app.Activity"/>
+<fullyQualifiedTypeName name="android.view.View"/>
+<fullyQualifiedTypeName name="com.outstandingresults.Helpers.ApplicationLoyalAZ"/>
+<fullyQualifiedTypeName name="android.app.NotificationManager"/>
+<fullyQualifiedTypeName name="android.content.Context"/>
+<fullyQualifiedTypeName name="android.app.Notification"/>
+<fullyQualifiedTypeName name="android.app.PendingIntent"/>
+<fullyQualifiedTypeName name="com.outstandingresults.loyalaz.GcmMessageHandler"/>
+<fullyQualifiedTypeName name="com.outstandingresults.loyalaz.FindProgramsActivity"/>
 </qualifiedTypeNameHistroy>

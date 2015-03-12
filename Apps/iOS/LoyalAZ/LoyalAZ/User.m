@@ -9,6 +9,7 @@
 
 @synthesize uid,st,name,email,lastname,firstname;
 @synthesize addresscity,mobilephone,addressstreet,addresssuburb,addresscountry;
+@synthesize dtoken;
 -(void)dealloc
 {
     [st release];

@@ -456,10 +456,20 @@
         listOfItems = [[NSMutableArray alloc]init];
         annArray = [[NSMutableArray alloc]init];
         MCoupon *tempCoupn = nil;
+        MCoupon *pushCoupon = nil;
         for(int i=0;i<appObject.moreCoupons.MCoupons.count;i++)
         {
             tempCoupn = [appObject.moreCoupons.MCoupons objectAtIndex:i];
             [listOfItems addObject:tempCoupn];
+            
+            if(appObject.fromNotification==YES)
+            {
+                
+                if([tempCoupn.id isEqualToString:appObject.cpnId]) {
+                    pushCoupon = tempCoupn;
+                }
+            }
+
         }
         [self SetupMapAnnotations];
         
@@ -469,6 +479,13 @@
         [self SetupArrays];
         [tableViewCoupons reloadData];
         // Fetched results are found in appObject.morePrograms.
+        
+        if(pushCoupon!=nil) {
+            CouponDetailsVC *moreCouponDetailsVC = [[CouponDetailsVC alloc]initWithNibNameAndCoupon:@"CouponDetailsVC" bundle:nil withCoupon:pushCoupon];
+            [self.navigationController pushViewController:moreCouponDetailsVC animated:YES];
+            [moreCouponDetailsVC release];
+        }
+        
     }
 }
 

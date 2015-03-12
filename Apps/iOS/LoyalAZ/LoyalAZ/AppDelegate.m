@@ -25,6 +25,8 @@
 //    [self GetFileNameFromCompletePath:@""];
     
     [BugSenseController sharedControllerWithBugSenseAPIKey:@"dffdc98f"];
+    [self clearAllNotifications];
+    
     
 //    [Appirater setAppId:@"552035781"];
 //    [Appirater setDaysUntilPrompt:1];
@@ -101,6 +103,14 @@
     return YES;
 }
 
+-(void)clearAllNotifications
+{
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 1];
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];
+}
+
+
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // Get a hex string from the device token with no spaces or < >
@@ -118,6 +128,39 @@
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
     NSLog(@"Failed to get token, error: %@", error);
+    UIAlertView *avError = [[UIAlertView alloc]initWithTitle:@"LoyalAZ" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+    [avError show];
+}
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSLog(@"app delegate notification recd.%@",userInfo);
+    
+    //NSString *msg = [[userInfo valueForKey:@"aps"] valueForKey:@"alert"];
+//    NSDictionary *data = [userInfo valueForKey:@"msgtype"];
+//    NSLog(@"Hidden data = %@",data);
+    int msgType = [[userInfo valueForKey:@"msgtype"]integerValue];
+    NSLog(@"MSGTYPE=%i",msgType);
+
+//    int programId = [[userInfo valueForKey:@"programid"]integerValue];
+//    NSLog(@"PRGID=%i",programId);
+    if(msgType==1) {
+        Application *appObject = [Application applicationManager];
+        appObject.prgId = [[[userInfo valueForKey:@"programid"]stringValue]retain];
+        NSLog(@"data=%@",appObject.prgId);
+        appObject.isCoupon = NO;
+        appObject.fromNotification = YES;
+        [self MoveToHomeScreen];
+    }
+    else if(msgType==2) {
+        Application *appObject = [Application applicationManager];
+        appObject.cpnId = [[[userInfo valueForKey:@"couponid"]stringValue]retain];
+        NSLog(@"data=%@",appObject.cpnId);
+        appObject.isCoupon = YES;
+        appObject.fromNotification = YES;
+        [self MoveToHomeScreen];
+    }
+    
 }
 
 

@@ -73,7 +73,7 @@ public class CommunicationManager  {
 
         
         SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-        params.put("d", "0");		// 0 = PRODUCTION;;	1= TESTING; 2= DEMO
+        params.put("d", "1");		// 0 = PRODUCTION;;	1= TESTING; 2= DEMO
         Iterator it = params.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pairs = (Map.Entry)it.next();

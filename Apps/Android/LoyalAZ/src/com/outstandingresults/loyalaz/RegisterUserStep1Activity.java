@@ -280,6 +280,8 @@ public class RegisterUserStep1Activity extends Activity {
     	ApplicationLoyalAZ.loyalaz.User.firstname = textFirstName.getText().toString();
     	ApplicationLoyalAZ.loyalaz.User.lastname = textLastName.getText().toString();
     	ApplicationLoyalAZ.loyalaz.User.email = textEmailId.getText().toString();
+    	ApplicationLoyalAZ.loyalaz.User.dtoken = ApplicationLoyalAZ.token;
+    	
     	StringBuilder sb = new StringBuilder();
     	
     	if(ApplicationLoyalAZ.loyalaz.User.firstname.length()==0)
@@ -380,6 +382,11 @@ public class RegisterUserStep1Activity extends Activity {
 	    	{
 	    		s = "-1";
 	    	}
+	    	else if(sArray[0].equals("0") && sArray[1].equals("1"))
+	    	{
+	    		s = businessObject.RegisterUserStep1();
+	    	}
+	    	
 	    	
 			return s;
 		}

@@ -41,7 +41,18 @@
     [webViewAds addGestureRecognizer:webViewTapped];
     [webViewTapped release];
     [self AddMotionEffect];
-
+    
+    Application *appObject = [Application applicationManager];
+    if(appObject.fromNotification==YES)
+    {
+        if(appObject.isCoupon==NO) {
+            [self ShowFindPrograms:nil];
+        }
+        else if(appObject.isCoupon==YES) {
+            [self ShowFindCoupons:nil];
+        }
+        
+    }
     
 //    Application *appObject = [Application applicationManager];
 //    if(appObject.firstTimeRun==YES)

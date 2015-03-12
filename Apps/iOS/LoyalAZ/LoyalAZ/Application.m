@@ -16,6 +16,10 @@
 @synthesize adsURL;
 @synthesize advertObject;
 @synthesize deviceToken;
+@synthesize prgId;
+@synthesize fromNotification;
+@synthesize cpnId;
+@synthesize isCoupon;
 
 static Application *applicationManager = nil;
 

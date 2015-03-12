@@ -15,7 +15,7 @@ public class User {
 	public String addresssuburb;
 	public String addresscity;
 	public String addresscountry;	
-	
+	public String dtoken;
 	
 	public User()
 	{
@@ -30,6 +30,7 @@ public class User {
 		addresscountry="";
 		addressstreet="";
 		addresssuburb="";
+		dtoken="";
 	}
 	
 }

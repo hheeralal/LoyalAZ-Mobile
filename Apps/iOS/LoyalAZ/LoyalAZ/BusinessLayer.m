@@ -114,8 +114,10 @@
 {
     rType = SyncXml;
     Application *appObject = [Application applicationManager];
+    appObject.loyalaz.user.dtoken = appObject.deviceToken;
     appObject.loyalaz.sync=@"0";
     NSString *xmlContents = [XMLParser ObjectToXml:appObject.loyalaz];
+    NSLog(@"XML===%@",xmlContents);
     
     //xmlContents = @"<LoyalAZ sync=\"\" ><User uid=\"25\" st=\"\" name=\"\" firstname=\"Harry\" lastname=\"Singh\" email=\"harry@gmail.com\" mobilephone=\"061398349348\" addressstreet=\"\" addresssuburb=\"\" addresscity=\"Chandigarh\" addresscountry=\"Australia\" ></User><programs><Program id=\"42\" pid=\"305758BA-0EC5-8AAD-A353-82B647F63156\" act=\"0\" name=\"$10 Voucher\" tagline=\"dfgfdgdf\" type=\"2\" pt_balance=\"1\" pt_target=\"20\" pic_logo=\"\" pic_front=\"\" pic_back=\"\" com_id=\"25\" com_name=\"Jitters\" com_web1=\"\" com_web2=\"\" com_phone=\"\" coupon_no=\"\"/></programs></LoyalAZ>";
     //xmlContents = [xmlContents stringByReplacingOccurrencesOfString:@"<coupons></coupons>" withString:@""];

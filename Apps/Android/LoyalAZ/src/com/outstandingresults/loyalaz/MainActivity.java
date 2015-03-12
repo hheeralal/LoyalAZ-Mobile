@@ -11,9 +11,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
+import java.util.concurrent.atomic.AtomicInteger;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import com.bugsense.trace.BugSenseHandler;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.outstandingresults.DataObjects.Advertisement;
 import com.outstandingresults.Helpers.ApplicationLoyalAZ;
 import com.outstandingresults.Helpers.BusinessLayer;
@@ -26,8 +30,10 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -38,6 +44,7 @@ import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -49,12 +56,53 @@ public class MainActivity extends Activity {
     private static String METHOD_NAME1 = "find_moreprogs";
 */    	
 	private ProgressDialog progressDialog;
+
+	GoogleCloudMessaging gcm;
+    String regid;
+    String PROJECT_NUMBER = "916626362095";
+    
+    public void getRegId(){
+    	new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String msg = "";
+                try {
+                    if (gcm == null) {
+                        gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
+                    }
+                    regid = gcm.register(PROJECT_NUMBER);
+                    msg = "Device registered, registration ID=" + regid;
+                    //Toast.makeText(MainActivity.this, regid, 500).show();
+                    ApplicationLoyalAZ.token=regid;
+                    Log.i("GCM",  msg);
+
+                   
+                } catch (IOException ex) {
+                    msg = "Error :" + ex.getMessage();
+                    
+                }
+                catch (Exception e) {
+                	Log.e("LAZ", e.getMessage());
+                }
+                return msg;
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+                //etRegId.setText(msg + "\n");
+            }
+        }.execute(null, null, null);
+    }
+	public void onClick(View v) {
+		getRegId();
+	}
 	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {
     	
+    	getRegId();
     	// 2013-06-27 10:48:11 PM
     	
 //		try {

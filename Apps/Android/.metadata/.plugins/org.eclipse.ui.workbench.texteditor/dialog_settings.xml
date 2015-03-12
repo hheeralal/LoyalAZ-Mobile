@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="recover" key="selection"/>
+		<item value="Facebook" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="facebook"/>
+			<item value="RegisterUser"/>
 			<item value="recover"/>
 			<item value="ApplicationLoyalAZ.baseURLSet"/>
 			<item value="ValidateSecurityToken"/>
 			<item value="AsyncRegister"/>
 			<item value="Validate"/>
 			<item value="DownloadCouponImages"/>
-			<item value="DownloadCouponImage"/>
-			<item value="DownloadCoupon"/>
 		</list>
 		<list key="replacehistory">
 		</list>
